@@ -1,0 +1,50 @@
+/************************************************** JAVA **************************************************/
+
+Better Approach
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+      int[] count = new int[26]; //create a map for storing all the alphabet character 
+        // Count the frequency of characters in string s
+        for (char x : s.toCharArray()) {
+            count[x - 'a']++;
+        }
+        // Decrement the frequency of characters in string t
+        for (char x : t.toCharArray()) {
+            count[x - 'a']--;
+        }
+        // Check if any character has non-zero frequency
+        for (int val : count) {
+            // if the value is not zero, it means it is a different character
+            if (val != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+Time Complexity :- O(N + M).
+Space Complexity :- O(1).
+
+
+Brute Force Approach
+
+ class Solution {
+    public boolean isAnagram(String s, String t) {
+
+        // Step 1: Convert both strings into character arrays
+        char[] sChars = s.toCharArray();
+        char[] tChars = t.toCharArray();
+
+        // Step 2: Sort both character arrays
+        // If two strings are anagrams, their sorted forms will be identical
+        Arrays.sort(sChars);
+        Arrays.sort(tChars);
+
+        // Step 3: Compare the sorted character arrays
+        return Arrays.equals(sChars, tChars);
+    }
+}
+Time Complexity :- O(n log n).
+Space Complexity :- O(N + M).
+
