@@ -1,0 +1,45 @@
+/**************************************************** JAVA *******************************************/
+
+Better Approach - using HashMap to store numbers and their index, then findthe  target to get the value from the map and their index
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int n = nums.length; // Get the length of the array
+        Map<Integer, Integer> mp = new HashMap<>(); // Create a HashMap to store numbers and their indices
+        // Iterate through the array
+        for (int i = 0; i < n; i++) {
+            int remaining = target - nums[i]; // Calculate the required complement
+            // If the complement exists in the map, return the indices
+            if (mp.containsKey(remaining)) {
+                return new int[]{mp.get(remaining), i}; // Return the stored index and current index
+            }
+            // Store the current number and its index in the map
+            mp.put(nums[i], i);
+        }
+        // Return an empty array if no solution is found (this case won't occur based on problem constraints)
+        return new int[]{};
+    }
+}
+Time Complexity :- O(N).
+Space Complexity :- O(N).
+
+Brute Force Approach - using two loops outer loop for picking the first elements, and an inner loop for check pair with the first element.
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        // Outer loop: pick the first element
+        for (int i = 0; i < nums.length; i++) {
+            // Inner loop: check pairs with the element at index i
+            for (int j = i + 1; j < nums.length; j++) {
+                // If the sum of the two elements equals the target
+                if (nums[i] + nums[j] == target) {
+                    // Return the indices of the two numbers
+                    return new int[]{i, j};
+                }
+            }
+        }
+        // If no valid pair is found (as per problem constraints, this usually won't happen)
+        return new int[]{};
+    }
+}
+Time Complexity :- O(N^2).
+Space Complexity :- O(1).
