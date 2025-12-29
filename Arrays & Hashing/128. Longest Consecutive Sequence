@@ -1,0 +1,44 @@
+/********************************************** JAVA ******************************************/ 
+
+Brute Force Approach - this soultion will a for loop and we gonna traverse the array again again for finding the number which is one greater than 
+                       previous number ( we can sort the array for better time complexity 
+
+  Time Complexity :- O(n^3) if use the sorting it will be O(n log n);
+  Space Complexity :- O(1);
+
+ Optimal Approach - we are using set for the unique value and then finding one less value is present in the set or not and then finding the longest 
+                    streak we have found in the set.
+
+  class Solution {
+    public int longestConsecutive(int[] nums) {
+        // Edge case: if the array is empty, no consecutive sequence exists
+        if (nums.length == 0) return 0;
+        // HashSet to store all elements for O(1) lookup
+        Set<Integer> set = new HashSet<>();
+        // Insert all numbers into the set
+        for (int num : nums) {
+            set.add(num);
+        }
+        // Variable to store the length of the longest consecutive sequence
+        int longest = 0;
+        // Iterate through each unique number in the set
+        for (int num : set) {
+            // We only start counting if num is the start of a sequence
+            // i.e., num - 1 does NOT exist in the set
+            if (!set.contains(num - 1)) {
+                int currNum = num; // current number in the sequence
+                int streak = 1;    // length of current consecutive sequence
+                // Count consecutive numbers forward
+                while (set.contains(currNum + 1)) {
+                    currNum++;
+                    streak++;
+                }
+                // Update the longest sequence found so far
+                longest = Math.max(longest, streak);
+            }
+        }
+        return longest;
+    }
+}
+  Time Complexity :- O(n);
+  Space Complexity :- O(n);
