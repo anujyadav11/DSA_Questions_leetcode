@@ -1,0 +1,31 @@
+/********************************************** JAVA ***********************************************/
+
+Optimal Approach - using two pointer and res array for calcluating product of the array except itself
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        // Result array where res[i] will store the product of all elements except nums[i]
+        int[] res = new int[n];
+        // left will store the product of all elements to the left of index i
+        int left = 1;
+        // First pass: compute left products
+        // res[i] = product of elements before index i
+        for (int i = 0; i < n; i++) {
+            res[i] = left;
+            left *= nums[i]; // update left product
+        }
+        // right will store the product of all elements to the right of index i
+        int right = 1;
+        // Second pass: compute right products and multiply with left products
+        // res[i] = left product * right product
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] *= right;
+            right *= nums[i]; // update right product
+        }
+        return res;
+    }
+}
+
+Time Complexity :- O(N)
+Space Complexity:- O(1)
