@@ -1,0 +1,48 @@
+/******************************************** JAVA ******************************************/
+
+Better Solution - we are using some edge cases and sorting the given array to use in a two-pointer solution.
+                  This is the best solution I can come up with because other solutions are very complicated and hard to implement 
+                   this one is easy to understand.
+
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        // Edge case: if array is null or has fewer than 3 elements,
+        // no triplet can sum to zero
+        if (nums == null || nums.length < 3) return new ArrayList<>();
+        // Sort the array to enable two-pointer technique
+        Arrays.sort(nums);
+        // Set to store unique triplets (avoids duplicates automatically)
+        Set<List<Integer>> set = new HashSet<>();
+        // Fix the first element of the triplet one by one
+        for (int i = 0; i < nums.length - 2; i++) {
+            // Initialize two pointers
+            int left = i + 1;
+            int right = nums.length - 1;
+            // Move pointers inward to find pairs that sum with nums[i] to zero
+            while (left < right) {
+                // Calculate the sum of the triplet
+                int sum = nums[i] + nums[left] + nums[right];
+                // If sum is zero, we found a valid triplet
+                if (sum == 0) {
+                    // Add the triplet to the set
+                    set.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    // Move both pointers to look for other combinations
+                    left++;
+                    right--;
+                }
+                // If sum is less than zero, increase sum by moving left pointer
+                else if (sum < 0)
+                    left++;
+                // If sum is greater than zero, decrease sum by moving right pointer
+                else
+                    right--;
+            }
+        }
+        // Convert the set to a list and return the result
+        return new ArrayList<>(set);
+    }
+}
+
+Time Complexity :- O(n^2).
+Space Complexity :- O(1)
