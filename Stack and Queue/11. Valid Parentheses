@@ -1,0 +1,34 @@
+/************************************************ JAVA *************************************/
+
+Optimal Approach - we are using a stack to solve this problem. Basically, we use a stack as an open and closed parentheses verifier. 
+
+class Solution {
+    public boolean isValid(String s) {
+        // Stack to store expected closing brackets
+        Stack<Character> st = new Stack<>();
+        // Iterate through each character in the string
+        for (char ch : s.toCharArray()) {
+            // If opening bracket, push its corresponding closing bracket
+            if (ch == '(') {
+                st.push(')');
+            }
+            else if (ch == '{') {
+                st.push('}');
+            }
+            else if (ch == '[') {
+                st.push(']');
+            }
+            // If closing bracket
+            else {
+                // If stack is empty OR top of stack doesn't match
+                // current closing bracket → invalid
+                if (st.isEmpty() || st.pop() != ch)
+                    return false;
+            }
+        }
+        // Stack should be empty if all brackets matched correctly
+        return st.isEmpty();
+    }
+}
+Time Complexity :- O(N)
+Space Complexity :- O(N)
