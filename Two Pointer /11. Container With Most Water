@@ -1,0 +1,37 @@
+/***************************************** JAVA *****************************************/
+
+Optimal Approach - we are using two pointer techique for getting the Height is limited by the shorter line, and then we shrink the pointers inward 
+                    to get the maxArea.
+
+class Solution {
+    public int maxArea(int[] height) {
+        int n = height.length;
+        // Two pointers: one at the beginning, one at the end
+        int i = 0, j = n - 1;
+        // Variable to store the maximum water area found
+        int maxWater = 0;
+        // Continue until the two pointers meet
+        while (i < j) {
+            // Width of the container
+            int w = j - i;
+            // Height is limited by the shorter line
+            int h = Math.min(height[i], height[j]);
+            // Area formed between the two lines
+            int area = w * h;
+            // Update maximum area
+            maxWater = Math.max(maxWater, area);
+            // Move the pointer pointing to the shorter line
+            // Because moving the taller one cannot increase area
+            if (height[i] > height[j]) {
+                j--;
+            } else {
+                i++;
+            }
+        }
+        // Return the maximum water that can be contained
+        return maxWater;
+    }
+}
+
+Time Complexity :- O(N),
+Space Complexity :- O(1),
