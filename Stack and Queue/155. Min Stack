@@ -1,0 +1,47 @@
+/*********************************************** JAVA *******************************************/
+
+Optimal Approach - we are using two stacks in this problem, one stack for storing all the values and one stack for storing only the minimum values, and we return minstack top at the last for getting
+                    the minimum value from the getMin() function.
+
+class MinStack {
+    // Main stack to store all values
+    Stack<Integer> st;
+    // Auxiliary stack to store minimum values
+    Stack<Integer> minSt;
+    // Constructor: initialize both stacks
+    public MinStack() {
+        st = new Stack<>();
+        minSt = new Stack<>();
+    }
+    // Push element onto the stack
+    public void push(int val) {
+        // Push value into main stack
+        st.push(val);
+        // Push into min stack if:
+        // 1) min stack is empty OR
+        // 2) current value is smaller than or equal to current minimum
+        if (minSt.isEmpty() || val <= minSt.peek()) {
+            minSt.push(val);
+        }
+    }
+    // Remove the top element from the stack
+    public void pop() {
+        // Pop value from main stack
+        int poppedValue = st.pop();
+        // If popped value is equal to current minimum,
+        // also remove it from min stack
+        if (poppedValue == minSt.peek()) {
+            minSt.pop();
+        }
+    }
+    // Get the top element of the stack
+    public int top() {
+        return st.peek();
+    }
+    // Retrieve the minimum element in the stack
+    public int getMin() {
+        return minSt.peek();
+    }
+}
+Time Complexity :- O(1).
+Space Complexity :- O(N).
