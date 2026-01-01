@@ -1,0 +1,35 @@
+/******************************************** JAVA ***************************************/
+
+Optimal Solution –  Using a stack and a result array, we store the indices of future days with higher temperatures, and for 
+                    each day calculate and store the number of days to wait until a warmer temperature is found, then return 
+                    the result array.
+
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        // Stack to store indices of days
+        // It maintains a monotonic decreasing stack based on temperatures
+        Stack<Integer> st = new Stack<>();
+        int n = temperatures.length;
+        // Result array to store the number of days to wait for a warmer temperature
+        int[] res = new int[n];
+        // Traverse the array from right to left
+        for (int idx = n - 1; idx >= 0; idx--) {
+            // Remove all indices from the stack whose temperatures
+            // are less than or equal to the current day's temperature
+            while (!st.isEmpty() && temperatures[idx] >= temperatures[st.peek()]) {
+                st.pop();
+            }
+            // If stack is not empty, the top element is the next warmer day
+            if (!st.isEmpty()) {
+                // Difference of indices gives the number of days to wait
+                res[idx] = st.peek() - idx;
+            }
+            // Push current index onto the stack
+            st.push(idx);
+        }
+        // Return the result array
+        return res;
+    }
+}
+Time Complexity :- O(N).
+Space Complexity :- O(N)
