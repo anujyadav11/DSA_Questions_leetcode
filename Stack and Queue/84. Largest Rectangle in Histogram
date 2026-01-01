@@ -1,0 +1,37 @@
+/********************************************* JAVA ***************************************/
+
+Optimal Solution –  We use a monotonic increasing stack to store bar indices and, whenever a smaller height is encountered, 
+                    pop bars to compute the maximum rectangle area using the popped height and the appropriate width, including 
+                    a final pass with height 0 to process all remaining bars.
+
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        // Stack to store indices of histogram bars
+        // It maintains increasing bar heights
+        Stack<Integer> st = new Stack<>();
+        int n = heights.length;
+        int maxArea = 0;
+        // Iterate through all bars + one extra iteration to process remaining bars
+        for (int i = 0; i <= n; i++) {
+            // Use height 0 at the end to flush the stack
+            int height = (i == n) ? 0 : heights[i];
+            // Calculate area while the current bar is smaller than stack top
+            while (!st.isEmpty() && heights[st.peek()] > height) {
+                // Height of the rectangle
+                int h = heights[st.pop()];
+                // Width of the rectangle
+                // If stack is empty, width extends from index 0 to i
+                // Otherwise, width is between current index and new stack top
+                int width = st.isEmpty() ? i : i - st.peek() - 1;
+                // Update maximum area
+                maxArea = Math.max(maxArea, h * width);
+            }
+            // Push current index onto the stack
+            st.push(i);
+        }
+        // Return the maximum rectangle area
+        return maxArea;
+    }
+}  
+Time Complexity :- O(N).
+Space Complexity :- O(N).
