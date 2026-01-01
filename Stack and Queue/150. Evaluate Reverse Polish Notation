@@ -1,0 +1,43 @@
+/********************************************** JAVA *********************************************/
+
+Optimal Solution – We use a stack to solve this problem by pushing all operands onto the stack and, whenever an operator appears, popping the 
+                    required operands, operating, and pushing the result back onto the stack.
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        // Stack to store operands during evaluation
+        Stack<Integer> st = new Stack<>();
+        // Iterate through each token in the RPN expression
+        for (String c : tokens) {
+            // If the token is an addition operator
+            if (c.equals("+")) {
+                // Pop two operands and push their sum
+                st.push(st.pop() + st.pop());
+            // If the token is a multiplication operator
+            } else if (c.equals("*")) {
+                // Pop two operands and push their product
+                st.push(st.pop() * st.pop());
+            // If the token is a subtraction operator
+            } else if (c.equals("-")) {
+                // Order matters: first popped is the second operand
+                int second = st.pop();
+                int first = st.pop();
+                st.push(first - second);
+            // If the token is a division operator
+            } else if (c.equals("/")) {
+                // Order matters: division is not commutative
+                int second = st.pop();
+                int first = st.pop();
+                st.push(first / second);
+            // If the token is a number
+            } else {
+                // Convert string to integer and push onto stack
+                st.push(Integer.parseInt(c));
+            }
+        }
+        // Final result will be on top of the stack
+        return st.peek();
+    }
+}
+Time complexity :- O(N).
+Space Complexity :- O(N).
