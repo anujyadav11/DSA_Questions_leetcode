@@ -1,0 +1,47 @@
+/******************************************** JAVA *********************************************/
+
+Optimal solution - We use binary search on the possible eating speed range, and for each speed, we check if Koko can finish all banana piles 
+                    within the given hours by summing the required hours per pile, finally narrowing down to the minimum feasible speed.
+
+
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        // Minimum possible eating speed
+        int minSpeed = 1;
+        // Maximum possible eating speed (max pile size)
+        int maxSpeed = 0;
+        for (int pile : piles) {
+            maxSpeed = Math.max(pile, maxSpeed);
+        }
+        // Binary search on the answer space (eating speed)
+        while (minSpeed < maxSpeed) {
+            // Mid speed to check feasibility
+            int mid = minSpeed + (maxSpeed - minSpeed) / 2;
+            // If Koko can eat all bananas at speed mid within h hours
+            // try to minimize the speed
+            if (canEat(piles, h, mid)) {
+                maxSpeed = mid;
+            } 
+            // Otherwise, increase the eating speed
+            else {
+                minSpeed = mid + 1;
+            }
+        }
+        // Minimum speed at which Koko can finish eating
+        return minSpeed;
+    }
+    public boolean canEat(int[] piles, int h, int speed) {
+        int hours = 0;
+        // Calculate total hours needed at given speed
+        for (int pile : piles) {
+            // Ceil division to count full hours per pile
+            hours += (int) Math.ceil((double) pile / speed);
+        }
+        // Check if total hours fit within h
+        return hours <= h;
+    }
+}
+
+
+Time Complexity :- O(n log m)
+Space Complexity :- O(1)
