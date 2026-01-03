@@ -1,0 +1,38 @@
+/*********************************************** JAVA *************************************************/
+
+Optimal solution - Treat the 2D matrix as a single sorted 1D array and apply binary search by mapping mid index to row (mid / m) and 
+                    column (mid % m) to find the target in O(log(n·m)) time and O(1) space.
+
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        // Number of rows in the matrix
+        int n = matrix.length;
+        // Number of columns in the matrix
+        int m = matrix[0].length;
+        // Treat the 2D matrix as a 1D sorted array
+        int low = 0;
+        int high = n * m - 1;
+        // Standard binary search
+        while (low <= high) {
+            // Find middle index (avoid overflow)
+            int mid = low + (high - low) / 2;
+            // Convert 1D index back to 2D indices
+            int row = mid / m;   // row index
+            int col = mid % m;   // column index
+            // If target is found, return true
+            if (matrix[row][col] == target)
+                return true;
+            // If target is greater, search right half
+            else if (matrix[row][col] < target)
+                low = mid + 1;
+            // If target is smaller, search left half
+            else
+                high = mid - 1;
+        }
+        // Target not found in the matrix
+        return false;
+    }
+}
+Time Complexity :- O(log N * M).
+Space Complexity :- O(1).
