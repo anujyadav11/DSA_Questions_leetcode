@@ -1,0 +1,44 @@
+/************************************************ JAVA ***********************************************/
+
+Optimal solution -  We store each key’s values with increasing timestamps and use binary search to efficiently retrieve the value 
+                    associated with the largest timestamp less than or equal to the given time.
+
+class TimeMap {
+    // HashMap to store key → list of (timestamp, value) pairs
+    Map<String, List<Pair<Integer, String>>> map;
+    public TimeMap() {
+        map = new HashMap<>();
+    }
+    // Sets the (timestamp, value) pair for a given key
+    public void set(String key, String value, int timestamp) {
+        map.putIfAbsent(key, new ArrayList<>()); // Initialize list if key doesn't exist
+        map.get(key).add(new Pair<>(timestamp, value)); // Append new timestamp-value pair
+    }
+    // Gets the value associated with the key at the latest timestamp <= given timestamp
+    public String get(String key, int timestamp) {
+        if (map.containsKey(key)) {
+            Pair<Integer, String> pair = binarySearch(map.get(key), timestamp);
+            return (pair.getKey() <= timestamp) ? pair.getValue() : "";
+        }
+        return "";
+    }
+    // Performs binary search to find the latest timestamp <= given timestamp
+    private Pair<Integer, String> binarySearch(List<Pair<Integer, String>> list, int timestamp) {
+        int l = 0, r = list.size(); // Right should be list.size() - 1 for correct indexing
+        while (l < r) { // Perform binary search
+            int mid = l + (r - l) / 2;
+            Pair<Integer, String> midVal = list.get(mid);
+            if (midVal.getKey() == timestamp) {
+                return midVal; // Exact match found
+            } else if (midVal.getKey() < timestamp) {
+                l = mid + 1; // Move right
+            } else {
+                r = mid; // Move left
+            }
+        }
+        // If `l` is 0, it means there's no valid timestamp <= given timestamp
+        return (l > 0) ? list.get(l - 1) : new Pair<>(-1, ""); // Handle edge case
+    }
+}
+Time Complexity :- O(log n).
+Space Complexity :- O(n).
