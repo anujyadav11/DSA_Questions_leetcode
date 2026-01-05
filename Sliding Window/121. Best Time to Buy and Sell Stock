@@ -1,0 +1,30 @@
+/*********************************************** JAVA *****************************************/
+
+Optimal Solution - We use a sliding window where the left pointer tracks the lowest buying price and the right pointer expands to find higher 
+                    selling prices, resetting the window whenever a lower price appears to maintain maximum profit.
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        // Sliding window pointers
+        int left = 0;   // buy day (window start)
+        int right = 1;  // sell day (window end)
+        int maxProfit = 0;
+        // Expand the window by moving the right pointer
+        while (right < n) {
+            // If the window is profitable, update max profit
+            if (prices[right] > prices[left]) {
+                maxProfit = Math.max(maxProfit, prices[right] - prices[left]);
+            } 
+            // If not profitable, shrink/reset the window
+            else {
+                left = right; // move buy day to a lower price
+            }
+            // Move the window forward
+            right++;
+        }
+        return maxProfit;
+    }
+}
+Time Complexity :- O(n).
+Space Complexity :- O(1).
