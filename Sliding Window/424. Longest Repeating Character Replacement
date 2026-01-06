@@ -1,0 +1,40 @@
+/******************************************* JAVA *********************************************/
+
+Optimal Solution - We use a sliding window that expands while tracking the most frequent character and shrinks it when the number of required 
+                    replacements exceed k, maintaining the maximum valid window length.
+
+
+class Solution {
+    public int characterReplacement(String s, int k) {
+        // Frequency array for characters A–Z
+        int[] freq = new int[26];
+        // Left pointer of the sliding window
+        int left = 0;
+        // Maximum frequency of a single character in the current window
+        int maxFreq = 0;
+        // Stores the maximum valid window size
+        int maxWindow = 0;
+        // Right pointer expands the sliding window
+        for (int right = 0; right < s.length(); right++) {
+            // Update frequency of the current character
+            freq[s.charAt(right) - 'A']++;
+            // Track the highest frequency in the window
+            maxFreq = Math.max(maxFreq, freq[s.charAt(right) - 'A']);
+            // Current window size
+            int windowLen = right - left + 1;
+            // If replacements needed exceed k, shrink window
+            if (windowLen - maxFreq > k) {
+                freq[s.charAt(left) - 'A']--;
+                left++;
+            }
+            // Update maximum window size
+            windowLen = right - left + 1;
+            maxWindow = Math.max(maxWindow, windowLen);
+        }
+        // Return the length of the longest valid substring
+        return maxWindow;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(26) ~  O(1).
