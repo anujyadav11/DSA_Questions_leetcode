@@ -1,0 +1,42 @@
+/*********************************************** JAVA **********************************************/
+
+Optimal Solution - We slide a fixed-size window over s2 while maintaining character frequencies and check if any window matches 
+                    the frequency pattern of s1, indicating a permutation.
+
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+        // If s1 is longer than s2, permutation is impossible
+        if (n > m) return false;
+        // Frequency arrays for characters a–z
+        int[] s1_freq = new int[26];
+        int[] s2_freq = new int[26];
+        // Populate frequency of s1
+        for (int i = 0; i < n; i++) {
+            s1_freq[s1.charAt(i) - 'a']++;
+        }
+        // Sliding window pointers
+        int i = 0, j = 0;
+        // Traverse s2 using sliding window of size n
+        while (j < m) {
+            // Add current character to window
+            s2_freq[s2.charAt(j) - 'a']++;
+            // If window size exceeds n, remove leftmost character
+            if (j - i + 1 > n) {
+                s2_freq[s2.charAt(i) - 'a']--;
+                i++;
+            }
+            // If both frequency arrays match, permutation exists
+            if (Arrays.equals(s1_freq, s2_freq)) {
+                return true;
+            }
+            j++;
+        }
+        // No permutation found
+        return false;
+    }
+}
+Time Complexity :- O(m + n).
+Space Complexity :- O(1).
