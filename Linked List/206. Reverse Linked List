@@ -1,0 +1,58 @@
+/****************************************************** JAVA ***************************************************/ 
+
+Brute Force Solution -  We reverse the linked list by pushing all node values onto a stack and rebuilding the list by popping values in reverse order.
+
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        // Stack to store values of the linked list
+        Stack<Integer> st = new Stack<>();
+        // Traverse the original list and push values onto the stack
+        while (head != null) {
+            st.push(head.val);
+            head = head.next;
+        }
+        // Dummy node to help build the reversed list
+        ListNode revList = new ListNode(Integer.MIN_VALUE);
+        ListNode ptr = revList;
+        // Pop values from the stack and create the reversed list
+        while (!st.isEmpty()) {
+            ptr.next = new ListNode(st.pop());
+            ptr = ptr.next;
+        }
+        // Return the head of the reversed list
+        return revList.next;
+    }
+}
+
+Time Complexity :- O(N)
+Space Complexity :- O(N)
+
+
+Optimal Solution - We reverse the linked list in-place by iteratively redirecting each node’s next pointer to its previous node while traversing the list.
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        // If the list is empty or has only one node, return as is
+        if (head == null || head.next == null)
+            return head;
+        // Previous node (initially null)
+        ListNode preNode = null;
+        // Current node starts at head
+        ListNode curNode = head;
+        // Iterate through the linked list
+        while (curNode != null) {
+            // Store the next node
+            ListNode nextNode = curNode.next;
+            // Reverse the current node's pointer
+            curNode.next = preNode;
+            // Move previous and current pointers one step forward
+            preNode = curNode;
+            curNode = nextNode;
+        }
+        // preNode will be the new head of the reversed list
+        return preNode;
+    }
+}
+Time Complexity :- O(N)
+Space Complexity :- O(1)
