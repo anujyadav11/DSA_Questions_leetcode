@@ -1,0 +1,36 @@
+/******************************************** JAVA *************************************************/
+
+Optimal solution - We use a monotonic decreasing deque to maintain indices of potential maximums, removing out-of-window and smaller 
+                    elements so the front of the deque always holds the maximum for the current sliding window.
+
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        // Create an array to store the maximum values for each sliding window
+        int[] result = new int[n - k + 1];
+        int resultIndex = 0;
+        // Create a deque to store indices of elements in the current window
+        Deque<Integer> deque = new ArrayDeque<>();
+        // Iterate through the input array
+        for (int i = 0; i < n; i++) {
+            // Remove the leftmost element if it's outside the current window
+            if (!deque.isEmpty() && deque.peek() == i - k) {
+                deque.poll();
+            }
+            // Remove elements from the back of the deque that are smaller than the current element
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+            // Add the current element's index to the deque
+            deque.offer(i);
+            // If we have processed at least k elements, store the maximum value in the result array
+            if (i >= k - 1) {
+                result[resultIndex++] = nums[deque.peek()];
+            }
+        }
+        return result;
+    }
+}
+Time Complexity :- O(N).
+Space Complexity :- O(K).
