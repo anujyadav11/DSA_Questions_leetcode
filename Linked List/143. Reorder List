@@ -1,0 +1,56 @@
+/*************************************************** JAVA *************************************************/
+
+
+Optimal Solution - We find the middle, reverse the second half in-place, and then merge the two halves alternately.
+
+
+class Solution {
+    public void reorderList(ListNode head) {
+        // Edge cases: empty list or single node
+        if (head == null || head.next == null) return;
+        /* -------------------------------
+           1️⃣ Find the middle of the list
+           ------------------------------- */
+        ListNode slow = head;
+        ListNode fast = head;
+        // Slow moves 1 step, fast moves 2 steps
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        // slow is now at the node before middle
+        ListNode preMiddle = slow;
+        /* -------------------------------
+           2️⃣ Reverse second half in-place
+           ------------------------------- */
+        ListNode preCurrent = preMiddle.next;
+        // Reverse nodes after preMiddle
+        while (preCurrent.next != null) {
+            ListNode current = preCurrent.next;
+            // Detach current
+            preCurrent.next = current.next;
+            // Insert current after preMiddle
+            current.next = preMiddle.next;
+            preMiddle.next = current;
+        }
+        /* -------------------------------
+           3️⃣ Merge both halves alternately
+           ------------------------------- */
+        ListNode p1 = head;
+        ListNode p2 = preMiddle.next;
+        // Merge until first half reaches middle
+        while (p1 != preMiddle) {
+            // Remove p2 from second half
+            preMiddle.next = p2.next;
+            // Insert p2 after p1
+            p2.next = p1.next;
+            p1.next = p2;
+            // Move pointers
+            p1 = p2.next;
+            p2 = preMiddle.next;
+        }
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
