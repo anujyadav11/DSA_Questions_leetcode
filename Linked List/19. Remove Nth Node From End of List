@@ -1,0 +1,32 @@
+/******************************************************* JAVA *****************************************************/
+
+Optimal Solution - We use two pointers with a fixed gap of n nodes so that when the fast pointer reaches the end, the slow pointer is positioned 
+                    just before the node to delete, allowing removal in one pass.
+
+
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // Dummy node helps handle edge cases like removing the head node
+        ListNode dummy = new ListNode(-1);
+        dummy.next = head;
+        // Two pointers starting from dummy
+        ListNode firstPtr = dummy;
+        ListNode secondPtr = dummy;
+        // Move secondPtr n steps ahead
+        for (int i = 0; i < n; i++) {
+            secondPtr = secondPtr.next;
+        }
+        // Move both pointers until secondPtr reaches the last node
+        while (secondPtr.next != null) {
+            firstPtr = firstPtr.next;
+            secondPtr = secondPtr.next;
+        }
+        // firstPtr is just before the node to be removed
+        firstPtr.next = firstPtr.next.next;
+        // Return the updated head
+        return dummy.next;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
