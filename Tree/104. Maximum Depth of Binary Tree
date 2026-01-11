@@ -1,0 +1,54 @@
+/************************************************* JAVA ********************************************/
+
+Recursive Solution - We compute the height of the left and right subtrees recursively and return one plus the larger height to represent the maximum depth from the root to a leaf.
+
+class Solution {
+    // Function to calculate the maximum depth of a binary tree
+    public int maxDepth(TreeNode root) {
+        // Base case: If the tree is empty (root is null), return 0.
+        if (root == null) return 0;
+        // Recursively calculate the maximum depth of the left and right subtrees.
+        int leftHeight = maxDepth(root.left);   // Height of the left subtree
+        int rightHeight = maxDepth(root.right); // Height of the right subtree
+        // The maximum depth of the current tree is 1 (current node) plus the maximum
+        // height of its left and right subtrees.
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
+
+Iterative Solution - We perform a level-order traversal using a queue and increment the depth counter after processing each level, resulting in the total number of levels in the tree.
+
+class Solution {
+    public int maxDepth(TreeNode root) {
+        // If tree is empty, depth is 0
+        if (root == null) return 0;
+        // Queue for level-order traversal
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        int levels = 0;
+        // Process tree level by level
+        while (!q.isEmpty()) {
+            // Number of nodes at current level
+            int nodeCount = q.size();
+            // Process all nodes in the current level
+            for (int i = 0; i < nodeCount; i++) {
+                TreeNode element = q.poll();
+                // Add left child if exists
+                if (element.left != null)
+                    q.add(element.left);
+                // Add right child if exists
+                if (element.right != null)
+                    q.add(element.right);
+            }
+            // One level completely processed
+            levels++;
+        }
+        // Total number of levels = maximum depth
+        return levels;
+    }
+}
+Time Complexity :- O(N).
+Space Complexity :- O(N).
