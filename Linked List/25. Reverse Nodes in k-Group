@@ -1,0 +1,36 @@
+/********************************************* JAVA ******************************************/
+
+Optimal Solution - We first check if a group of k nodes exists, recursively reverse the remaining list, and then reverse 
+                    The current group of k nodes is linked to the already reversed remainder.
+
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        // Pointer to check if there are at least k nodes ahead
+        ListNode cur = head;
+        int count = 0;
+        // Count k nodes
+        while (cur != null && count != k) {
+            cur = cur.next;
+            count++;
+        }
+        // If exactly k nodes exist, reverse them
+        if (count == k) {
+            // Recursively reverse the remaining list starting from cur
+            cur = reverseKGroup(cur, k);
+            // Reverse current group of k nodes
+            while (count-- > 0) {
+                ListNode temp = head.next; // store next node
+                head.next = cur;           // connect to reversed remainder
+                cur = head;                // move cur forward
+                head = temp;               // move head forward
+            }
+            // After reversal, cur becomes the new head
+            head = cur;
+        }
+        // Return new head of the list
+        return head;
+    }
+}
+
+Time Complexity :- O(N)
+Space Compelxity :- O(1) 
