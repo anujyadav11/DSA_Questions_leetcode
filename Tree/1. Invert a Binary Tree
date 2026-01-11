@@ -1,0 +1,51 @@
+/********************************************************** JAVA *******************************************************/
+
+Recursive Solution - We recursively invert the left and right subtrees of every node and swap them, resulting in a mirror image of the original binary tree.
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        // Base case: if the tree is empty, return null
+        if (root == null) {
+            return null;
+        }
+        // Recursively invert left and right subtrees
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        // Swap the left and right children
+        root.left = right;
+        root.right = left;
+        // Return the root of the inverted tree
+        return root;
+    }
+}
+
+ Time Complexity :- O(N).
+ Space Complexity :- O(H).
+
+ Iterative Solution - We perform a level-order traversal using a queue and swap the left and right children of every node to iteratively produce the mirror image of the binary tree.
+
+ class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        // If tree is empty, nothing to invert
+        if (root == null) return null;
+        // Queue for level-order traversal
+        Queue<TreeNode> que = new LinkedList<>();
+        que.add(root);
+        // Process nodes level by level
+        while (!que.isEmpty()) {
+            TreeNode node = que.poll();
+            // Swap left and right children
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+            // Add children to queue for further processing
+            if (node.left != null) que.add(node.left);
+            if (node.right != null) que.add(node.right);
+        }
+        // Return root of inverted tree
+        return root;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
