@@ -1,0 +1,54 @@
+/*********************************************** JAVA **************************************************/
+
+Recursive Solution - Two trees are the same if their roots have equal values and their left and right subtrees are recursively identical.
+
+class Solution {
+    // Checks whether two binary trees are structurally identical
+    // and have the same node values
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // If both nodes are null, trees match at this branch
+        if (p == null && q == null)
+            return true;
+        // If one is null and the other is not, trees differ
+        if (p == null || q == null)
+            return false;
+        // If values differ, trees are not the same
+        if (p.val != q.val)
+            return false;
+        // Recursively compare left and right subtrees
+        return isSameTree(p.left, q.left) &&
+               isSameTree(p.right, q.right);
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
+
+Iterative Solution - Compare two binary trees level-by-level using BFS to ensure identical structure and node values.
+
+class Solution {
+    public boolean isSameTree(TreeNode a, TreeNode b) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(a);
+        q.add(b);
+        while (!q.isEmpty()) {
+            TreeNode first = q.poll();
+            TreeNode second = q.poll();
+            // If both nodes are null, they match at this position
+            if (first == null && second == null)
+                continue;
+            // If one is null or values differ, trees are not the same
+            if (first == null || second == null || first.val != second.val)
+                return false;
+            // Push children in the same order for both trees
+            q.add(first.left);
+            q.add(second.left);
+            q.add(first.right);
+            q.add(second.right);
+        }
+        return true;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
