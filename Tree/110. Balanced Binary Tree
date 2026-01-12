@@ -1,0 +1,35 @@
+/*************************************************** JAVA ***********************************************/
+
+Optimal Solution - We compute subtree heights bottom-up and immediately return -1 whenever a node is unbalanced to avoid unnecessary traversal.
+
+
+class Solution {
+    // Returns true if the binary tree is height-balanced
+    public boolean isBalanced(TreeNode root) {
+        // If dfsHeight returns -1, tree is unbalanced
+        return dfsHeight(root) != -1;
+    }
+    // Helper function to compute height
+    // Returns -1 if subtree is unbalanced
+    private int dfsHeight(TreeNode root) {
+        // Base case: empty subtree has height 0
+        if (root == null)
+            return 0;
+        // Compute left subtree height
+        int leftHeight = dfsHeight(root.left);
+        if (leftHeight == -1)
+            return -1; // Left subtree already unbalanced
+        // Compute right subtree height
+        int rightHeight = dfsHeight(root.right);
+        if (rightHeight == -1)
+            return -1; // Right subtree already unbalanced
+        // If current node is unbalanced
+        if (Math.abs(leftHeight - rightHeight) > 1)
+            return -1;
+        // Return height of current subtree
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H). height of the tree.
