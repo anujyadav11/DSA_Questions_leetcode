@@ -1,0 +1,76 @@
+/********************************************************** JAVA ************************************************/
+
+Recursive Solution - The diameter is computed by finding, for each node, the sum of heights of its left and right subtrees 
+                      while tracking the maximum such value during a single DFS traversal.
+
+class Solution {
+    // Function to find the diameter of a Binary Tree.
+    public int diameterOfBinaryTree(TreeNode root) {
+        // Create an array to store the diameter value (use an array to pass by reference).
+        int[] diameter = new int[1];    
+        // Call the height function to compute the diameter and update it.
+        height(root, diameter);
+        // The diameter is stored in the first element of the diameter array.
+        return diameter[0];
+    }
+    // Private helper function to calculate height and diameter.
+    private int height(TreeNode node, int[] diameter) {
+        if (node == null) return 0;
+        // Recursively calculate the heights of the left and right subtrees.
+        int leftHeight = height(node.left, diameter);
+        int rightHeight = height(node.right, diameter);
+        // Update the diameter if the current diameter is larger.
+        diameter[0] = Math.max(diameter[0], leftHeight + rightHeight);
+        // Return the height of the current subtree.
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+}
+
+Time Complexity :- O(N)
+Space Complexity :- O(H) height of the tree
+
+
+Iterative Solution - We simulate postorder traversal using a stack and store subtree heights in a map, updating the diameter as 
+                      the sum of left and right subtree heights at each node.
+
+class Solution {
+    public int diameterOfBinaryTree(TreeNode root) {
+        // Map to store height of each processed node
+        Map<TreeNode, Integer> heightMap = new HashMap<>();
+        // Stack to simulate postorder traversal
+        Stack<TreeNode> stack = new Stack<>();
+        // Variable to track maximum diameter
+        int diameter = 0;
+        // Push root if it exists
+        if (root != null) {
+            stack.push(root);
+        }
+        // Iterative postorder traversal
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.peek();
+            // Traverse left subtree if not processed
+            if (node.left != null && !heightMap.containsKey(node.left)) {
+                stack.push(node.left);
+            }
+            // Traverse right subtree if not processed
+            else if (node.right != null && !heightMap.containsKey(node.right)) {
+                stack.push(node.right);
+            }
+            // Both children processed, now process current node
+            else {
+                stack.pop();
+                // Get heights of left and right subtrees
+                int leftHeight = heightMap.getOrDefault(node.left, 0);
+                int rightHeight = heightMap.getOrDefault(node.right, 0);
+                // Update height of current node
+                heightMap.put(node, 1 + Math.max(leftHeight, rightHeight));
+                // Update diameter (longest path through this node)
+                diameter = Math.max(diameter, leftHeight + rightHeight);
+            }
+        }
+        return diameter;
+    }
+}
+
+Time Complexity :- O(N).
+Space Compelxity :- O(N).
