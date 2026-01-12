@@ -1,0 +1,37 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Serialise both trees using preorder traversal with null and boundary markers, then check 
+                  If the serialised subtree string exists within the serialised main tree, to determine subtree presence.
+
+
+class Solution {
+    // Main function to check whether subRoot is a subtree of root
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        // Serialize the entire main tree using preorder traversal
+        String fullTree = preOrder(root);
+        // Serialize the subtree using preorder traversal
+        String subTree = preOrder(subRoot);
+        // Check if serialized subtree exists inside serialized main tree
+        return fullTree.contains(subTree);
+    }
+    // Helper function to serialize a tree using preorder traversal
+    public String preOrder(TreeNode node) {
+        // Base case: represent null nodes with a unique marker
+        // This is IMPORTANT to preserve tree structure and avoid false matches
+        if (node == null) return "#";
+        // StringBuilder is used for efficient string concatenation
+        StringBuilder sb = new StringBuilder();
+        // Add a special marker '^' before each node value
+        // This avoids cases like "2" matching inside "12"
+        sb.append("^").append(node.val);
+        // Recursively serialize the left subtree
+        sb.append(preOrder(node.left));
+        // Recursively serialize the right subtree
+        sb.append(preOrder(node.right));
+        // Return the serialized string for this subtree
+        return sb.toString();
+    }
+}
+
+Time Complexity :- O(N * M).
+Space Complexity :- O(N + M).
