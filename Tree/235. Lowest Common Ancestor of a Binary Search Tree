@@ -1,0 +1,31 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Recursively search both subtrees and return the node where paths to p and q diverge, which is their lowest common ancestor.
+
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // Base case: if root is null, no LCA possible
+        if (root == null)
+            return null;
+        // If current node matches either p or q, return it
+        if (root == p || root == q)
+            return root;
+        // Recursively search left and right subtrees
+        TreeNode leftN = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightN = lowestCommonAncestor(root.right, p, q);
+        /*
+         * If p is found in one subtree and q in the other,
+         * then current root is the Lowest Common Ancestor
+         */
+        if (leftN != null && rightN != null) {
+            return root;
+        }
+        // Otherwise return the non-null subtree result
+        if (leftN != null)
+            return leftN;
+        return rightN;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
