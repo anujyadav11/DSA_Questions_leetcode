@@ -1,0 +1,39 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use level-order traversal and record the last node at each level to obtain the binary tree’s right-side view.
+
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        // List to store the right-side view values
+        List<Integer> res = new ArrayList<>();
+        // Edge case: empty tree
+        if (root == null)
+            return res;
+        // Queue for level-order (BFS) traversal
+        Queue<TreeNode> que = new LinkedList<>();
+        que.add(root);
+        // Traverse the tree level by level
+        while (!que.isEmpty()) {
+            // Number of nodes at current level
+            int size = que.size();
+            int lastValue = 0; // Stores the last node value of this level
+            // Process all nodes in the current level
+            for (int i = 0; i < size; i++) {
+                TreeNode node = que.poll();
+                // Update lastValue — the last node processed will be the rightmost one
+                lastValue = node.val;
+                // Add left and right children for next level
+                if (node.left != null)
+                    que.offer(node.left);
+                if (node.right != null)
+                    que.offer(node.right);
+            }
+            // Add the rightmost value of the current level
+            res.add(lastValue);
+        }
+        return res;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
