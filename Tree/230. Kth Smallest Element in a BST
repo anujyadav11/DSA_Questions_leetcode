@@ -1,0 +1,33 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use inorder traversal of a BST to visit nodes in sorted order and return the k-th visited element.
+
+class Solution {
+    // Variables to keep track of count and answer
+    int count = 0;
+    int ans = 0;
+    // Inorder traversal helper (Left → Root → Right)
+    private void inorder(TreeNode root, int k) {
+        // Base case: if node is null, return
+        if (root == null) return;
+        // Traverse left subtree
+        inorder(root.left, k);
+        // Increment count when visiting a node
+        count++;
+        // If this is the k-th smallest node, store answer
+        if (count == k) {
+            ans = root.val;
+            return;
+        }
+        // Traverse right subtree
+        inorder(root.right, k);
+    }
+    // Main function to find k-th smallest element in BST
+    public int kthSmallest(TreeNode root, int k) {
+        inorder(root, k);
+        return ans;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
