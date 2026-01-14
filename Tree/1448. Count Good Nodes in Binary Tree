@@ -1,0 +1,30 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Traverse the tree using DFS while tracking the maximum value on the path to count nodes that are not smaller than any of their ancestors.
+
+class Solution {
+    // Main function to count good nodes
+    public int goodNodes(TreeNode root) {
+        // Start DFS with the minimum possible value
+        return dfs(root, Integer.MIN_VALUE);
+    }
+    // DFS helper function
+    private int dfs(TreeNode node, int maxSoFar) {
+        // Base case: empty node contributes 0 good nodes
+        if (node == null)
+            return 0;
+        int res = 0;
+        // If current node is greater than or equal to max seen so far
+        if (node.val >= maxSoFar) {
+            res = 1; // Current node is a good node
+            maxSoFar = node.val; // Update max for child paths
+        }
+        // Continue DFS on left and right subtrees
+        res += dfs(node.left, maxSoFar);
+        res += dfs(node.right, maxSoFar);
+        return res;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
