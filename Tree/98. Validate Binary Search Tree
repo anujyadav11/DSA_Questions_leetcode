@@ -1,0 +1,27 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Validate a BST by recursively enforcing strict min–max bounds for every node in the tree.
+
+class Solution {
+    // Checks if a binary tree is a valid Binary Search Tree (BST)
+    public boolean isValidBST(TreeNode root) {
+        // Use long range to avoid integer overflow issues
+        return validBst(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    // Helper function that validates BST using value boundaries
+    private boolean validBst(TreeNode root, long minVal, long maxVal) {
+        // Base case: empty subtree is a valid BST
+        if (root == null)
+            return true;
+        // Current node must lie strictly between minVal and maxVal
+        if (root.val <= minVal || root.val >= maxVal)
+            return false;
+        // Left subtree must be < root.val
+        // Right subtree must be > root.val
+        return validBst(root.left, minVal, root.val) &&
+               validBst(root.right, root.val, maxVal);
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
