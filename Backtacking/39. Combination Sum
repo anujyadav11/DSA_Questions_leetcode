@@ -1,0 +1,44 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Find all unique combinations using backtracking by choosing or skipping candidates while allowing unlimited reuse.
+
+class Solution {
+    // Stores all valid combinations
+    List<List<Integer>> res;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        res = new ArrayList<>();
+        // Start backtracking with an empty combination
+        backtrack(candidates, target, new ArrayList<>(), 0);
+        return res;
+    }
+    /*
+     * backtrack tries to build combinations that sum up to target
+     *
+     * nums   -> candidate numbers
+     * target -> remaining sum to achieve
+     * curr   -> current combination being formed
+     * i      -> current index (allows reuse of same element)
+     */
+    public void backtrack(int[] nums, int target, List<Integer> curr, int i) {
+        // If exact target achieved, store the combination
+        if (target == 0) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+        // If target goes negative or no more candidates, stop exploring
+        if (target < 0 || i >= nums.length) {
+            return;
+        }
+        // -------- Choice 1: Pick nums[i] (can reuse same element) --------
+        curr.add(nums[i]);
+        backtrack(nums, target - nums[i], curr, i);
+        // Backtrack (remove last picked element)
+        curr.remove(curr.size() - 1);
+        // -------- Choice 2: Skip nums[i] and move to next candidate --------
+        backtrack(nums, target, curr, i + 1);
+    }
+}
+
+
+Time Complexity :- O(2ᵗ). T = target
+Space Complexity :- O(T).
