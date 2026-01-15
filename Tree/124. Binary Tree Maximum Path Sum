@@ -1,0 +1,37 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use DFS to compute the maximum downward path from each node while tracking the global maximum path sum that may pass through any node.
+
+class Solution {
+    // Main function that initialises the global maximum path sum
+    public int maxPathSum(TreeNode root) {
+        // Using array to simulate pass-by-reference for max value
+        int[] maxValue = new int[1];
+        maxValue[0] = Integer.MIN_VALUE;
+        // Helper DFS to compute max path sum
+        maxPathDown(root, maxValue);
+        return maxValue[0];
+    }
+    /*
+     * Returns the maximum sum of a path going DOWN from this node.
+     * Updates maxValue with the best path that passes THROUGH this node.
+     */
+    private int maxPathDown(TreeNode node, int[] maxValue) {
+        // Base case
+        if (node == null)
+            return 0;
+        // Ignore negative contributions from left/right subtrees
+        int left = Math.max(0, maxPathDown(node.left, maxValue));
+        int right = Math.max(0, maxPathDown(node.right, maxValue));
+        // Update global max considering path through current node
+        maxValue[0] = Math.max(
+                maxValue[0],
+                left + right + node.val
+        );
+        // Return max single-branch path
+        return Math.max(left, right) + node.val;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(H).
