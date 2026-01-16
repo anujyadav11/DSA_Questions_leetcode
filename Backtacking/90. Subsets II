@@ -1,0 +1,39 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Generate all unique subsets using backtracking by sorting the array and skipping duplicates at the same recursion level.
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        // Result list to store all unique subsets
+        List<List<Integer>> res = new ArrayList<>();
+        // Temporary list to build subsets
+        List<Integer> cur = new ArrayList<>();
+        // Sort the array to group duplicates together
+        Arrays.sort(nums);
+        // Start backtracking from index 0
+        backtrack(nums, res, cur, 0);
+        return res;
+    }
+    private void backtrack(int[] nums,
+                           List<List<Integer>> res,
+                           List<Integer> cur,
+                           int idx) {
+        // Add the current subset to the result
+        res.add(new ArrayList<>(cur));
+        // Try to include each element starting from idx
+        for (int i = idx; i < nums.length; i++) {
+            // Skip duplicates at the same recursion level
+            if (i > idx && nums[i] == nums[i - 1])
+                continue;
+            // Choose the current element
+            cur.add(nums[i]);
+            // Recurse for the next index
+            backtrack(nums, res, cur, i + 1);
+            // Backtrack: remove the last added element
+            cur.remove(cur.size() - 1);
+        }
+    }
+}
+
+Time Complexity :- O(2ⁿ).
+Space Complexity :- O(n).
