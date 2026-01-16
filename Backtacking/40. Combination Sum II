@@ -1,0 +1,41 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Generate all unique combinations using backtracking with sorting and duplicate skipping, where each number is used at most once.
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        // Result list to store all unique combinations
+        List<List<Integer>> res = new ArrayList<>();
+        // Current combination being built
+        List<Integer> curr = new ArrayList<>();
+        // Sort candidates to handle duplicates easily
+        Arrays.sort(candidates);
+        // Start backtracking from index 0
+        backtrack(candidates, target, curr, res, 0);
+        return res;
+    }
+    private void backtrack(int[] nums, int target, List<Integer> curr,
+                           List<List<Integer>> res, int idx) {
+        // If target becomes negative, this path is invalid
+        if (target < 0)return;
+        // If target becomes zero, we found a valid combination
+        if (target == 0) {
+            res.add(new ArrayList<>(curr));
+            return;
+        }
+        // Try all candidates starting from current index
+        for (int i = idx; i < nums.length; i++) {
+            // Skip duplicates at the same recursion level
+            if (i > idx && nums[i] == nums[i - 1]) continue;
+            // Choose current number
+            curr.add(nums[i]);
+            // Move to next index since each number can be used only once
+            backtrack(nums, target - nums[i], curr, res, i + 1);
+            // Backtrack: remove last chosen number
+            curr.remove(curr.size() - 1);
+        }
+    }
+}
+
+Time Complexity :- O(2ⁿ).
+Space Complexity :- O(N).
