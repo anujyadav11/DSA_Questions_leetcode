@@ -1,0 +1,38 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Generate all possible permutations using backtracking by choosing unused elements at each step.
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        // List to store all permutations
+        List<List<Integer>> res = new ArrayList<>();
+        // Start backtracking with an empty temporary list
+        backtrack(res, new ArrayList<>(), nums);
+        return res;
+    }
+    private void backtrack(List<List<Integer>> res,
+                           List<Integer> tempList,
+                           int[] nums) {
+        // If the temporary list contains all numbers,
+        // we have formed one complete permutation
+        if (tempList.size() == nums.length) {
+            res.add(new ArrayList<>(tempList));
+            return;
+        }
+        // Try each number in nums
+        for (int num : nums) {
+            // Skip the number if it is already used in the current permutation
+            if (tempList.contains(num))
+                continue;
+            // Choose the number
+            tempList.add(num);
+            // Recurse to build the rest of the permutation
+            backtrack(res, tempList, nums);
+            // Backtrack: remove the last chosen number
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+
+Time Complexity :- O(n · n!).
+Space Complexity :- O(n).
