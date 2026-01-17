@@ -1,0 +1,44 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Backtracking solution that generates all palindrome partitions by expanding valid palindromic substrings from each index.
+
+class Solution {
+    int n;
+    // Check if substring s[l..r] is a palindrome
+    boolean isPalindrome(String s, int l, int r) {
+        while (l < r) {
+            if (s.charAt(l) != s.charAt(r))
+                return false;
+            l++;
+            r--;
+        }
+        return true;
+    }
+    public List<List<String>> partition(String s) {
+        n = s.length();
+        List<List<String>> res = new ArrayList<>();
+        List<String> cur = new ArrayList<>();
+        backtrack(s, res, cur, 0);
+        return res;
+    }
+    // Backtracking to generate all palindrome partitions
+    public void backtrack(String s, List<List<String>> res, List<String> cur, int idx) {
+        // If we've used the entire string, store the current partition
+        if (idx == n) {
+            res.add(new ArrayList<>(cur)); // MUST create a copy
+            return;
+        }
+        // Try all possible substrings starting from idx
+        for (int i = idx; i < n; i++) {
+            if (isPalindrome(s, idx, i)) {
+                // substring end index is exclusive
+                cur.add(s.substring(idx, i + 1));
+                backtrack(s, res, cur, i + 1);
+                cur.remove(cur.size() - 1); // backtrack
+            }
+        }
+    }
+}
+
+Time Complexity :- O(n · 2ⁿ).
+Space Complexity :- O(n · 2ⁿ).
