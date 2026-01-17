@@ -1,0 +1,49 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use DFS with backtracking to explore all paths from each cell while marking visited cells in-place.
+
+class Solution {
+    int l, m, n;
+    // Directions for moving: right, left, down, up
+    int[][] directions = { {0, 1}, {0, -1}, {1, 0}, {-1, 0} };
+    // DFS function to check if word can be formed starting from (i, j)
+    public boolean find(char[][] board, int i, int j, String word, int idx) {
+        // If we have matched all characters of the word
+        if (idx == l) return true;
+        // Boundary check + character mismatch
+        if (i < 0 || i >= m || j < 0 || j >= n || board[i][j] != word.charAt(idx))
+            return false;
+        // Mark the current cell as visited
+        char temp = board[i][j];
+        board[i][j] = '$';
+        // Explore all 4 possible directions
+        for (int[] dir : directions) {
+            if (find(board, i + dir[0], j + dir[1], word, idx + 1))
+                return true;
+        }
+        // Backtrack: restore the original character
+        board[i][j] = temp;
+        return false;
+    }
+    // Main function to check if the word exists in the board
+    public boolean exist(char[][] board, String word) {
+        m = board.length;
+        n = board[0].length;
+        l = word.length();
+        // Edge case: empty board
+        if (m * n == 0) return false;
+        // Try to start DFS from every cell
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == word.charAt(0) && find(board, i, j, word, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+
+Time Complexity :- O().
+Space Complexity :- O().
