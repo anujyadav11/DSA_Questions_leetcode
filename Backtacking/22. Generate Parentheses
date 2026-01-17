@@ -1,0 +1,35 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use backtracking to build valid parentheses by adding '(' when available and ')' only when it keeps the string valid.
+
+class Solution {
+    // Generates all valid combinations of n pairs of parentheses
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        backTrack(res, "", 0, 0, n);
+        return res;
+    }
+    // Backtracking helper function
+    // cur   → current parentheses string
+    // open  → number of '(' used so far
+    // close → number of ')' used so far
+    // max   → total pairs allowed
+    public void backTrack(List<String> res, String cur, int open, int close, int max) {
+        // Base case: when the current string has 2 * n characters
+        if (cur.length() == max * 2) {
+            res.add(cur);
+            return;
+        }
+        // Add '(' if we still have remaining opening brackets
+        if (open < max) {
+            backTrack(res, cur + "(", open + 1, close, max);
+        }
+        // Add ')' only if it won't break validity
+        if (close < open) {
+            backTrack(res, cur + ")", open, close + 1, max);
+        }
+    }
+}
+
+Time Complexity :- O(4ⁿ / √n).
+Space Complexity :- O(4ⁿ / √n).
