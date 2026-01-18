@@ -1,0 +1,29 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Uses a max heap to repeatedly smash the two heaviest stones until only one or none remains."
+
+class Solution {
+    public int lastStoneWeight(int[] stones) {
+        // Max-heap to always get the two heaviest stones
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        // Insert all stones into the max-heap
+        for (int stone : stones) {
+            pq.add(stone);
+        }
+        // Continue smashing stones until at most one remains
+        while (pq.size() > 1) {
+            // Extract the two heaviest stones
+            int y = pq.poll(); // heaviest
+            int x = pq.poll(); // second heaviest
+            // If weights are not equal, push the remaining weight back
+            if (x != y) {
+                pq.add(y - x);
+            }
+        }
+        // If heap is empty, no stones left; otherwise return remaining stone
+        return pq.isEmpty() ? 0 : pq.poll();
+    }
+}
+
+Time Complexity :- O(n log  n).
+Space Complexity :- O(n).
