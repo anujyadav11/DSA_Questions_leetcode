@@ -1,0 +1,47 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use backtracking to generate all possible letter combinations by exploring every character mapped to each digit of the phone keypad.
+
+class Solution {
+    List<String> result = new ArrayList<>(); // To store the final combinations
+    // Recursive function to build combinations
+    private void solve(int idx, String digits, StringBuilder temp, Map<Character, String> mp) {
+        // Base case: if we have processed all digits
+        if (idx >= digits.length()) {
+            result.add(temp.toString());
+            return;
+        }
+        // Get the current digit and corresponding letters
+        char ch = digits.charAt(idx);
+        String str = mp.get(ch);
+        // Try all possible characters for the current digit
+        for (int i = 0; i < str.length(); i++) {
+            // Do: choose a letter
+            temp.append(str.charAt(i));
+            // Explore: move to the next digit
+            solve(idx + 1, digits, temp, mp);
+            // Undo: remove the last character (backtrack)
+            temp.deleteCharAt(temp.length() - 1);
+        }
+    }
+    public List<String> letterCombinations(String digits) {
+        if (digits.length() == 0)
+            return new ArrayList<>(); // If input is empty, return empty list
+        Map<Character, String> mp = new HashMap<>();
+        // Mapping digits to corresponding letters
+        mp.put('2', "abc");
+        mp.put('3', "def");
+        mp.put('4', "ghi");
+        mp.put('5', "jkl");
+        mp.put('6', "mno");
+        mp.put('7', "pqrs");
+        mp.put('8', "tuv");
+        mp.put('9', "wxyz");
+        StringBuilder temp = new StringBuilder(); // Temporary combination string
+        solve(0, digits, temp, mp); // Start recursion
+        return result;
+    }
+}
+
+Time Complexity: O(4^n)
+Space Complexity: O(n)  // excluding output
