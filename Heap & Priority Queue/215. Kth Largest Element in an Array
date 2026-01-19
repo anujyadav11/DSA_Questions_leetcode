@@ -1,0 +1,26 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Find the kth largest element by maintaining a min-heap of size k while iterating through the array.
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        // Min-heap to keep track of the k largest elements
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        // Process each number in the array
+        for (int num : nums) {
+            // Add current number to the heap
+            pq.offer(num);
+            // If heap size exceeds k, remove the smallest element
+            // This ensures the heap always contains the k largest elements
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+        // The top of the min-heap is the kth largest element
+        return pq.peek();
+    }
+}
+
+
+Time Complexity :- O(n log k).
+Space Complexity :- O(k).
