@@ -1,0 +1,49 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Schedule tasks using a max-heap by executing the most frequent tasks first in fixed cycles of size (n + 1) to minimize idle time.
+
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+        // Frequency array for tasks A–Z
+        int[] freq = new int[26];
+        for (char ch : tasks) {
+            freq[ch - 'A']++;
+        }
+        // Max-heap to always pick the task with highest remaining frequency
+        PriorityQueue<Integer> pq =
+                new PriorityQueue<>(Collections.reverseOrder());
+        // Add all non-zero frequencies to the heap
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] > 0) {
+                pq.offer(freq[i]);
+            }
+        }
+        int time = 0;
+        // Process tasks in cycles of length (n + 1)
+        while (!pq.isEmpty()) {
+            int taskCount = 0;          // tasks executed in this cycle
+            int cycle = n + 1;
+            List<Integer> store = new ArrayList<>();
+            // Execute up to (n + 1) most frequent tasks
+            while (cycle-- > 0 && !pq.isEmpty()) {
+                int currFreq = pq.poll();
+                // If task still has remaining count, store it for reinsertion
+                if (currFreq > 1) {
+                    store.add(currFreq - 1);
+                }
+                taskCount++;
+            }
+            // Push remaining tasks back into the heap
+            for (int remaining : store) {
+                pq.offer(remaining);
+            }
+            // If heap is empty, no idle time needed
+            // Otherwise, full cycle length is used
+            time += pq.isEmpty() ? taskCount : (n + 1);
+        }
+        return time;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
