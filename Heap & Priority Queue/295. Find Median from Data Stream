@@ -1,0 +1,41 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - I keep the smaller half in a max-heap and the larger half in a min-heap, balancing their sizes so the median is always accessible in constant time.
+
+class MedianFinder {
+    // Two PriorityQueues to maintain the elements in max and min heaps.
+    PriorityQueue<Integer> maxHeap; // Max heap for the smaller half of the numbers.
+    PriorityQueue<Integer> minHeap; // Min heap for the larger half of the numbers.
+    public MedianFinder() {
+        // Constructor: Initialize the two heaps with custom comparators.
+        // In maxHeap, the larger numbers are at the root.
+        // In minHeap, the smaller numbers are at the root.
+        maxHeap = new PriorityQueue<Integer>((a, b) -> b - a);
+        minHeap = new PriorityQueue<Integer>((a, b) -> a - b);
+    }
+    public void addNum(int num) {
+        // Method to add a number to the median finder.
+        if (maxHeap.isEmpty() || maxHeap.peek() >= num)
+            maxHeap.add(num); // If the number is smaller or equal to the maximum in the max heap, add it to maxHeap.
+        else
+            minHeap.add(num); // Otherwise, add it to minHeap.
+        // Ensure the balance between maxHeap and minHeap. If one is larger by more than 1 element, rebalance.
+        if (maxHeap.size() > minHeap.size() + 1)
+            minHeap.add(maxHeap.poll());
+        else if (maxHeap.size() < minHeap.size())
+            maxHeap.add(minHeap.poll());
+    }
+    public double findMedian() {
+        // Method to find the median of the numbers inserted so far.
+        if (maxHeap.size() == minHeap.size()) {
+            // If both heaps have the same number of elements, the median is the average of their roots.
+            return (maxHeap.peek() + minHeap.peek()) / 2.0;
+        } else {
+            // Otherwise, the median is the root of the maxHeap since it contains the middle element.
+            return maxHeap.peek();
+        }
+    }
+}
+
+Time Complexity :- O(log n).
+Space Complexity :- O(n).
