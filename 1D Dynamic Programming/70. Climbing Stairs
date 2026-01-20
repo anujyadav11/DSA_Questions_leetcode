@@ -1,0 +1,25 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Classic dynamic programming problem where the number of ways to reach a step equals the sum of ways to reach the previous two steps.
+
+class Solution {
+    public int climbStairs(int n) {
+        // Base case: only one way to climb 1 stair
+        if (n == 1) return 1;
+        // dp[i] will store the number of ways to reach step i
+        int[] dp = new int[n + 1];
+        // Base cases
+        dp[1] = 1; // one way: (1)
+        dp[2] = 2; // two ways: (1+1), (2)
+        // Fill the DP table
+        for (int i = 3; i <= n; i++) {
+            // Ways to reach i = ways from (i-1) + ways from (i-2)
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        // Result is number of ways to reach step n
+        return dp[n];
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
