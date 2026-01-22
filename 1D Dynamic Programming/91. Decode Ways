@@ -1,0 +1,37 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use dynamic programming to count decoding ways by validating one-digit and two-digit mappings at each step.
+                  At each index, I check whether the last one or two characters form valid encodings and build the solution bottom-up.
+
+class Solution {
+    public int numDecodings(String s) {
+        int n = s.length();
+        // dp[i] = number of ways to decode substring s[0..i-1]
+        int[] dp = new int[n + 1];
+        // Base case: empty string has 1 way to decode
+        dp[0] = 1;
+        // First character cannot be '0'
+        dp[1] = (s.charAt(0) == '0') ? 0 : 1;
+        // Fill DP table
+        for (int i = 2; i <= n; i++) {
+            // Decode last one digit
+            int oneDigit = Integer.parseInt(s.substring(i - 1, i));
+            // Decode last two digits
+            int twoDigit = Integer.parseInt(s.substring(i - 2, i));
+            // If single digit is valid (1–9), add ways from dp[i-1]
+            if (oneDigit >= 1) {
+                dp[i] += dp[i - 1];
+            }
+            // If two-digit number is valid (10–26), add ways from dp[i-2]
+            if (twoDigit >= 10 && twoDigit <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        // Total ways to decode the full string
+        return dp[n];
+    }
+}
+
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
