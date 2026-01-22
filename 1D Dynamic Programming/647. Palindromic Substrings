@@ -1,0 +1,33 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Count all palindromic substrings by expanding around every possible center.
+                  Every palindrome has a center, so I expand around each index for odd and even cases to count all palindromic substrings.
+
+class Solution {
+    public int countSubstrings(String s) {
+        int count = 0;
+        // Try every index as a center
+        for (int i = 0; i < s.length(); i++) {
+            // Count odd-length palindromes (center at i)
+            count += countPalindromes(s, i, i);
+            // Count even-length palindromes (center between i and i+1)
+            count += countPalindromes(s, i, i + 1);
+        }
+        return count;
+    }
+    // Expands around the given center and counts palindromes
+    private int countPalindromes(String s, int left, int right) {
+        int count = 0;
+        // Expand while the substring is a palindrome
+        while (left >= 0 && right < s.length()
+                && s.charAt(left) == s.charAt(right)) {
+            count++;   // Found one palindromic substring
+            left--;
+            right++;
+        }
+        return count;
+    }
+}
+
+Time Complexity :- O(N^2).
+Space Complexity :- O(1).
