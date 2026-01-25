@@ -1,0 +1,37 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use 1D dynamic programming to check if a subset with sum equal to half of the total array sum exists.
+                    This is a 0/1 knapsack problem where we check if any subset sums to half of the total array sum.
+
+class Solution {
+    public boolean canPartition(int[] nums) {
+        // Calculate total sum of the array
+        int sum = Arrays.stream(nums).sum();
+        // If total sum is odd, it cannot be split into two equal subsets
+        if (sum % 2 != 0)
+            return false;
+        int target = sum / 2;
+        // dp[i] = true if a subset with sum i is achievable
+        boolean[] dp = new boolean[target + 1];
+        // Base case: sum 0 is always achievable (empty subset)
+        dp[0] = true;
+        // Process each number
+        for (int num : nums) {
+            // Traverse backwards to avoid reusing the same number
+            for (int i = target; i >= num; i--) {
+                // If we can make (i - num), then we can make i
+                if (dp[i - num]) {
+                    // Early exit if target is reached
+                    if (i == target)
+                        return true;
+                    dp[i] = true;
+                }
+            }
+        }
+        // Final result: whether target sum is achievable
+        return dp[target];
+    }
+}
+
+Time Complexity :- O(n x s).
+Space Complexity :- O(s). s = total sum of elements
