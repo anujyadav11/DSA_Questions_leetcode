@@ -1,0 +1,47 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Determine if all courses can be completed using topological sorting and indegree tracking.
+                  If there’s a cycle in the prerequisite graph, Kahn’s algorithm won’t process all courses.
+
+class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // Adjacency list representing course dependencies
+        List<List<Integer>> graph = new ArrayList<>();
+        // inDegree[i] = number of prerequisites for course i
+        int[] inDegree = new int[numCourses];
+        // Initialize graph
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+        // Build the graph and indegree array
+        for (int[] pre : prerequisites) {
+            graph.get(pre[1]).add(pre[0]); // edge: pre[1] -> pre[0]
+            inDegree[pre[0]]++;
+        }
+        // Queue for BFS (Kahn's Algorithm)
+        Queue<Integer> queue = new LinkedList<>();
+        // Add courses with no prerequisites
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+        int count = 0; // number of courses completed
+        // Process courses in topological order
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            count++;
+            // Reduce indegree of dependent courses
+            for (int next : graph.get(curr)) {
+                inDegree[next]--;
+                if (inDegree[next] == 0)
+                    queue.offer(next);
+            }
+        }
+        // If all courses are completed, return true
+        return count == numCourses;
+    }
+}
+
+Time Complexity :- O(V + E).
+Space Complexity :- O(V + E).
