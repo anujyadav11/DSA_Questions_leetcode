@@ -1,0 +1,53 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use topological sorting (Kahn’s algorithm) to return a valid course order or detect cycles.
+                  This is the same cycle-detection logic as canFinish, but instead of counting nodes, I record the topological order.
+
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // Adjacency list representing course dependencies
+        List<List<Integer>> graph = new ArrayList<>();
+        // inDegree[i] = number of prerequisites for course i
+        int[] inDegree = new int[numCourses];
+        // Initialize graph
+        for (int i = 0; i < numCourses; i++) {
+            graph.add(new ArrayList<>());
+        }
+        // Build the graph and indegree array
+        for (int[] pre : prerequisites) {
+            graph.get(pre[1]).add(pre[0]); // edge: pre[1] -> pre[0]
+            inDegree[pre[0]]++;
+        }
+        // Queue for BFS (Kahn’s Algorithm)
+        Queue<Integer> queue = new LinkedList<>();
+        // Store the course ordering
+        int[] order = new int[numCourses];
+        int index = 0;
+        // Add all courses with no prerequisites
+        for (int i = 0; i < numCourses; i++) {
+            if (inDegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
+        // Process courses in topological order
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            order[index++] = curr;
+            // Reduce indegree of dependent courses
+            for (int next : graph.get(curr)) {
+                inDegree[next]--;
+                if (inDegree[next] == 0) {
+                    queue.offer(next);
+                }
+            }
+        }
+        // If not all courses are processed, cycle exists
+        if (index != numCourses) {
+            return new int[0];
+        }
+        return order;
+    }
+}
+
+Time Complexity :- O(V + E).
+Space Complexity :- O(V + E).
