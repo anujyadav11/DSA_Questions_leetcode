@@ -1,0 +1,58 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Mark all boundary-connected regions using DFS and flip the remaining surrounded cells.
+                  Instead of searching surrounded regions, I first mark all boundary-connected regions and then flip the rest.
+
+class Solution {
+    int row, col;
+    public void solve(char[][] board) {
+        // Dimensions of the board
+        row = board.length;
+        col = board[0].length;
+        // Step 1: Run DFS on boundary 'O's (left & right borders)
+        for (int i = 0; i < row; i++) {
+            if (board[i][0] == 'O') {
+                dfs(board, i, 0);
+            }
+            if (board[i][col - 1] == 'O') {
+                dfs(board, i, col - 1);
+            }
+        }
+        // Step 2: Run DFS on boundary 'O's (top & bottom borders)
+        for (int i = 0; i < col; i++) {
+            if (board[0][i] == 'O') {
+                dfs(board, 0, i);
+            }
+            if (board[row - 1][i] == 'O') {
+                dfs(board, row - 1, i);
+            }
+        }
+        // Step 3: Flip all remaining 'O' to 'X'
+        // Restore temporary 'T' back to 'O'
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (board[i][j] == 'O') {
+                    board[i][j] = 'X';   // surrounded region
+                } else if (board[i][j] == 'T') {
+                    board[i][j] = 'O';   // connected to border
+                }
+            }
+        }
+    }
+    // DFS marks all 'O's connected to boundary as temporary 'T'
+    public void dfs(char[][] board, int i, int j) {
+        // Boundary and validity checks
+        if (i < 0 || j < 0 || i >= row || j >= col || board[i][j] != 'O')
+            return;
+        // Mark cell as safe (not surrounded)
+        board[i][j] = 'T';
+        // Explore all four directions
+        dfs(board, i + 1, j);
+        dfs(board, i - 1, j);
+        dfs(board, i, j + 1);
+        dfs(board, i, j - 1);
+    }
+}
+
+Time Complexity :- O(R x C).
+Space Complexity :- O(R x C).
