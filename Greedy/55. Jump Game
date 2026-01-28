@@ -1,0 +1,25 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy approach that tracks the leftmost index capable of reaching the end by scanning from right to left.
+                  Instead of simulating jumps forward, I work backward and keep shrinking the goal position whenever an index can reach it
+
+class Solution {
+    public boolean canJump(int[] nums) {
+        // finalPos represents the leftmost index that can reach the end
+        int finalPos = nums.length - 1;
+        // Traverse the array from right to left
+        for (int idx = nums.length - 2; idx >= 0; idx--) {
+            // If from current index we can reach or cross finalPos,
+            // then update finalPos to current index
+            if (idx + nums[idx] >= finalPos) {
+                finalPos = idx;
+            }
+        }
+        // If we can move finalPos back to index 0, return true
+        return finalPos == 0;
+    }
+}
+
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
