@@ -1,0 +1,38 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy solution that resets the starting station whenever the gas balance becomes negative, ensuring a linear-time solution.
+                    If I can’t reach station i + 1 from my current start, then none of the stations before i can be a valid start either.
+
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        // Total gas available and total cost required
+        int totalGas = 0, totalCost = 0;
+        // First pass: check if a solution is even possible
+        for (int i = 0; i < gas.length; i++) {
+            totalGas += gas[i];
+            totalCost += cost[i];
+        }
+        // If total gas is less than total cost, no solution exists
+        if (totalGas < totalCost)
+            return -1;
+        // currGas tracks gas balance while traversing
+        int currGas = 0;
+        // startIdx is the candidate starting station
+        int startIdx = 0;
+        // Second pass: greedy selection of starting index
+        for (int i = 0; i < gas.length; i++) {
+            // Update current gas balance
+            currGas += gas[i] - cost[i];
+            // If gas becomes negative, this segment is invalid
+            if (currGas < 0) {
+                // Next station must be the new start
+                startIdx = i + 1;
+                currGas = 0;
+            }
+        }
+        return startIdx;
+    }
+}
+
+Time Complexity :- O().
+Space Complexity :- O().
