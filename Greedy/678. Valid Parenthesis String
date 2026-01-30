@@ -1,0 +1,39 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy range-tracking solution that validates parentheses by maintaining possible open-count bounds.
+                  Treat * as flexible and track a range [min, max] of possible open parentheses; validity holds if the range never breaks and ends at zero.
+
+class Solution {
+    public boolean checkValidString(String s) {
+        // min = minimum possible open parentheses count
+        // max = maximum possible open parentheses count
+        int min = 0, max = 0;
+        // Traverse each character in the string
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(') {
+                // '(' always increases open count
+                min += 1;
+                max += 1;
+            } else if (ch == ')') {
+                // ')' decreases open count
+                min -= 1;
+                max -= 1;
+            } else {
+                // '*' can be '(' or ')' or empty
+                // Treat '*' as ')' for min and '(' for max
+                min -= 1;
+                max += 1;
+            }
+            // min should never be negative
+            if (min < 0) min = 0;
+            // If max goes negative, too many ')'
+            if (max < 0) return false;
+        }
+        // If minimum open count is zero, string can be valid
+        return min == 0;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
