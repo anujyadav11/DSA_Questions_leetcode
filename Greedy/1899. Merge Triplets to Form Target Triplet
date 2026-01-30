@@ -1,0 +1,32 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy solution that validates whether the target triplet can be formed by combining valid triplets without exceeding the target values.
+                   I ignore invalid triplets and greedily track which target coordinates can be matched; if all three are covered, the merge is possible.
+
+class Solution {
+    public boolean mergeTriplets(int[][] triplets, int[] target) {
+        // Set to track which indices (0, 1, 2) of target can be matched
+        Set<Integer> good = new HashSet<>();
+        // Iterate through each triplet
+        for (int[] t : triplets) {
+            // Skip this triplet if it exceeds target in any dimension
+            if (t[0] > target[0] || t[1] > target[1] || t[2] > target[2]) {
+                continue;
+            }
+            // Check each position of the triplet
+            for (int i = 0; i < t.length; i++) {
+                // If this triplet matches target at index i,
+                // mark this index as achievable
+                if (t[i] == target[i]) {
+                    good.add(i);
+                }
+            }
+        }
+        // If all 3 indices are matched, target can be formed
+        return good.size() == 3;
+    }
+}
+
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
