@@ -1,0 +1,37 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy solution that partitions the string by expanding segments to include the last occurrence of each character.
+                   Precompute each character’s last index, then greedily extend the current partition until all included characters are closed — cut only when safe.
+
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        // Array to store the last occurrence index of each character (a–z)
+        int[] last = new int[26];
+        // Fill the last occurrence for every character in the string
+        for (int i = 0; i < s.length(); i++) {
+            last[s.charAt(i) - 'a'] = i;
+        }
+        // Result list to store sizes of each partition
+        List<Integer> result = new ArrayList<>();
+        // maxLast keeps track of the farthest last index in the current partition
+        // prevEnd stores the end index of the previous partition
+        int maxLast = 0, prevEnd = -1;
+        // Traverse the string to create partitions
+        for (int i = 0; i < s.length(); i++) {
+            // Update the farthest boundary needed for current partition
+            maxLast = Math.max(maxLast, last[s.charAt(i) - 'a']);
+            // If current index reaches the partition boundary
+            if (i == maxLast) {
+                // Add the size of the current partition
+                result.add(i - prevEnd);
+                // Update previous partition end
+                prevEnd = i;
+            }
+        }
+        // Return the list of partition sizes
+        return result;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
