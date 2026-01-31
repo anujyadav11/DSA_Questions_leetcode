@@ -28,5 +28,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O().
-Space Complexity :- O().
+Time Complexity :- O(N).
+Space Complexity :- O(N).
