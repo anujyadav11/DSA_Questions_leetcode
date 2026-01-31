@@ -1,0 +1,24 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Bit manipulation solution using XOR to find the single non-duplicate element in linear time.
+                   XOR eliminates duplicates automatically, so the remaining value after one pass is the unique number.
+
+class Solution {
+    public int singleNumber(int[] nums) {
+        // Variable to store the XOR result
+        int res = 0;
+        // Length of the array
+        int n = nums.length;
+        // Traverse all numbers
+        for (int i = 0; i < n; i++) {
+            // XOR current number with result
+            // Duplicate numbers cancel out (a ^ a = 0)
+            res = nums[i] ^ res;
+        }
+        // Remaining value is the number that appears once
+        return res;
+    }
+}
+
+Time Complexity :- O(n).
+Space Complexity :- O(1).
