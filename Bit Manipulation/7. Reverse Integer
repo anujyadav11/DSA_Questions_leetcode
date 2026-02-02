@@ -1,0 +1,29 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Digit-by-digit integer reversal with overflow protection and sign handling.
+                   Reverse using modulo/division and guard against overflow before multiplying by 10.
+
+class Solution {
+    public int reverse(int x) {
+        // Check if the number is negative
+        boolean isNeg = x < 0;
+        // Work with absolute value to simplify digit reversal
+        x = Math.abs(x);
+        // Variable to store the reversed number
+        int num = 0;
+        // Reverse digits one by one
+        while (x > 0) {
+            // Overflow check before multiplying by 10
+            if (Integer.MAX_VALUE / 10 < num) return 0;
+            // Append the last digit of x to num
+            num = 10 * num + x % 10;
+            // Remove the last digit from x
+            x /= 10;
+        }
+        // Restore sign if original number was negative
+        return isNeg ? -num : num;
+    }
+}
+
+Time Complexity :- O(log n).
+Space Complexity :- O(1).
