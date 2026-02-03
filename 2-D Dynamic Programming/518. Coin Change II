@@ -1,0 +1,45 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Top-down DP solution to count coin change combinations using memoisation and unbounded choices.
+                   Model it as an unbounded knapsack: choose to take the same coin again or skip to the next, caching results to avoid recomputation.
+
+class Solution {
+    // Memoization table: t[i][amt] stores number of ways
+    // using coins from index i to make amount = amt
+    int[][] t;
+    // Number of coins
+    int n;
+    public int change(int amount, int[] coins) {
+        // Total number of coin types
+        n = coins.length;
+        //Initialise memo table with -1 (uncomputed states)
+        t = new int[n + 1][amount + 1];
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= amount; j++) {
+                t[i][j] = -1;
+            }
+        }
+        // Start recursion from index 0 with full amount
+        return solve(0, coins, amount);
+    }
+    public int solve(int i, int[] coins, int amount) {
+        // If the exact amount is formed, count one valid way
+        if (amount == 0) return 1;
+        // If no coins left, but the amount remains
+        if (i == n) return 0;
+        // Return cached result if already computed
+        if (t[i][amount] != -1) return t[i][amount];
+        int take = 0;
+        // Option 1: take current coin (unlimited times)
+        if (coins[i] <= amount) {
+            take = solve(i, coins, amount - coins[i]);
+        }
+        // Option 2: skip the current coin and move to the next
+        int skip = solve(i + 1, coins, amount);
+        // Store and return total ways
+        return t[i][amount] = take + skip;
+    }
+}
+
+Time Complexity :- O(n * amount).
+Space Complexity :- O(n * amount).
