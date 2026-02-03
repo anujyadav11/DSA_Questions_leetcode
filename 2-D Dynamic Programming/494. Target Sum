@@ -1,0 +1,39 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - DP with hash maps to count the number of ways to assign + and - signs to reach a target sum.
+                   Each number doubles the choices (+ or −), and DP maps help aggregate how many ways each sum can be formed efficiently.
+
+class Solution {
+    public int findTargetSumWays(int[] nums, int target) {
+        // dp map: key = achievable sum, value = number of ways to reach that sum
+        Map<Integer, Integer> dp = new HashMap<>();
+        // Base case: one way to reach sum 0 (choose nothing)
+        dp.put(0, 1);
+        // Process each number in the array
+        for (int num : nums) {
+            // Map to store results for the next iteration
+            Map<Integer, Integer> nextDp = new HashMap<>();
+            // Iterate over all previously achievable sums
+            for (int sum : dp.keySet()) {
+                int count = dp.get(sum);
+                // Choose '+' sign for current number
+                nextDp.put(
+                        sum + num,
+                        nextDp.getOrDefault(sum + num, 0) + count
+                );
+                // Choose '-' sign for current number
+                nextDp.put(
+                        sum - num,
+                        nextDp.getOrDefault(sum - num, 0) + count
+                );
+            }
+            // Move to the next state
+            dp = nextDp;
+        }
+        // Return number of ways to reach the target sum
+        return dp.getOrDefault(target, 0);
+    }
+}
+
+Time Complexity :- O(n * s). s is totalsum;
+Space Complexity :- O(s).
