@@ -1,0 +1,47 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Top-down DP solution to check if a string is an interleaving of two others using memoization.
+                   Define DP on indices of both strings and match characters greedily against the third string while caching overlapping subproblems.
+
+class Solution {
+    // Lengths of s1, s2, and s3
+    int m, n, N;
+    // Memoization table: t[i][j] stores whether
+    // s3[i+j...] can be formed using s1[i...] and s2[j...]
+    Boolean t[][];
+    public boolean solve(int i, int j, String s1, String s2, String s3) {
+        // If both strings are fully consumed, interleaving is valid
+        if (i == m && j == n)
+            return true;
+        // Return cached result if already computed
+        if (t[i][j] != null)
+            return t[i][j];
+        boolean res = false;
+        // Try taking next character from s1 if it matches s3
+        if (i < m && s1.charAt(i) == s3.charAt(i + j)) {
+            res = solve(i + 1, j, s1, s2, s3);
+        }
+        // If not successful, try taking next character from s2
+        if (!res && j < n && s2.charAt(j) == s3.charAt(i + j)) {
+            res = solve(i, j + 1, s1, s2, s3);
+        }
+        // Store and return the result for state (i, j)
+        return t[i][j] = res;
+    }
+    public boolean isInterleave(String s1, String s2, String s3) {
+        // Store lengths
+        m = s1.length();
+        n = s2.length();
+        N = s3.length();
+        // If total lengths don't match, interleaving is impossible
+        if (m + n != N)
+            return false;
+        // Initialize memoization table
+        t = new Boolean[m + 1][n + 1];
+        // Start recursion from index 0 of both strings
+        return solve(0, 0, s1, s2, s3);
+    }
+}
+
+Time Complexity :- O(m * n).
+Space Complexity :- O(m * n).
