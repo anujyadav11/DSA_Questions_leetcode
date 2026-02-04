@@ -1,0 +1,57 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - DFS with memoization to compute the longest strictly increasing path in a matrix.
+                   Treat each cell as a starting point, run DFS to explore increasing neighbors, and memoize results to reduce exponential paths to linear time.
+
+class Solution {
+    // Directions for moving up, down, left, and right
+    int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    // dp[r][c] stores the longest increasing path starting from cell (r, c)
+    int[][] dp;
+    private int dfs(int[][] matrix, int r, int c, int prevVal) {
+        int ROWS = matrix.length, COLS = matrix[0].length;
+        // Boundary check and ensure strictly increasing condition
+        if (r < 0 || r >= ROWS || c < 0 ||
+            c >= COLS || matrix[r][c] <= prevVal) {
+            return 0;
+        }
+        // If already computed, return cached result
+        if (dp[r][c] != -1) return dp[r][c];
+        // At least the current cell itself forms a path of length 1
+        int res = 1;
+        // Explore all 4 directions
+        for (int[] d : directions) {
+            res = Math.max(
+                    res,
+                    1 + dfs(matrix, r + d[0], c + d[1], matrix[r][c])
+            );
+        }
+        // Store result in memo table
+        return dp[r][c] = res;
+    }
+    public int longestIncreasingPath(int[][] matrix) {
+        int ROWS = matrix.length, COLS = matrix[0].length;
+        int LIP = 0;
+        // Initialize memo table with -1 (unvisited)
+        dp = new int[ROWS][COLS];
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        // Try starting DFS from every cell
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                LIP = Math.max(
+                        LIP,
+                        dfs(matrix, r, c, Integer.MIN_VALUE)
+                );
+            }
+        }
+        // Return the longest increasing path found
+        return LIP;
+    }
+}
+
+Time Complexity :- O(m * n).
+Space Complexity :- O(m * n).
