@@ -1,0 +1,42 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Dynamic programming solution to compute edit distance using insert, delete, and replace operations.
+                   Define DP on string prefixes and choose the cheapest operation at each mismatch.
+
+class Solution {
+    public int minDistance(String word1, String word2) {
+        // Lengths of the two words
+        final int m = word1.length();
+        final int n = word2.length();
+        // DP table where costDp[i][j] represents
+        // minimum operations to convert word1[0..i-1] to word2[0..j-1]
+        int[][] costDp = new int[m + 1][n + 1];
+        // Base case: converting word1[0..i-1] to empty string (all deletions)
+        for (int i = 1; i <= m; i++)
+            costDp[i][0] = i;
+        // Base case: converting empty string to word2[0..j-1] (all insertions)
+        for (int i = 1; i <= n; i++)
+            costDp[0][i] = i;
+        // Fill the DP table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                // If characters match, no operation needed
+                if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+                    costDp[i][j] = costDp[i - 1][j - 1];
+                }
+                // Otherwise, choose the minimum of replace, delete, or insert
+                else {
+                    int topLeft = costDp[i - 1][j - 1]; // replace
+                    int top = costDp[i - 1][j];         // delete
+                    int left = costDp[i][j - 1];        // insert
+                    costDp[i][j] = Math.min(topLeft, Math.min(top, left)) + 1;
+                }
+            }
+        }
+        // Final answer: minimum edit distance
+        return costDp[m][n];
+    }
+}
+
+Time Complexity :- O(m * n).
+Space Complexity :- O(m * n).
