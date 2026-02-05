@@ -1,0 +1,39 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Dynamic programming solution to count distinct subsequences of a string forming a target string.
+                   For each character in s, decide whether to use it to match t or skip it, and accumulate counts using DP.
+
+class Solution {
+    public int numDistinct(String s, String t) {
+        // Lengths of source string s and target string t
+        int m = s.length(), n = t.length();
+        // dp[i][j] = number of distinct subsequences of
+        // s[0..j-1] that form t[0..i-1]
+        int[][] dp = new int[n + 1][m + 1];
+        // Base case: empty target string can be formed in exactly
+        // one way from any prefix of s (by deleting all characters)
+        for (int j = 0; j <= m; j++) {
+            dp[0][j] = 1;
+        }
+        // Fill DP table
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // If characters match, we can either:
+                // 1) use this character (dp[i][j])
+                // 2) skip this character (dp[i+1][j])
+                if (t.charAt(i) == s.charAt(j)) {
+                    dp[i + 1][j + 1] = dp[i][j] + dp[i + 1][j];
+                }
+                // If characters don't match, we must skip s[j]
+                else {
+                    dp[i + 1][j + 1] = dp[i + 1][j];
+                }
+            }
+        }
+        // Final answer: ways to form full t from full s
+        return dp[n][m];
+    }
+}
+
+Time Complexity :- O(n * m).
+Space Complexity :- O(n * m).
