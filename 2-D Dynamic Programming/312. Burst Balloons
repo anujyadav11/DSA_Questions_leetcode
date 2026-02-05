@@ -1,0 +1,42 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Interval DP solution that maximizes coins by choosing the last balloon to burst in each subarray.
+                   Think in reverse: instead of bursting first, assume one balloon is burst last—this fixes its neighbors and enables interval DP.
+  
+class Solution {
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+        // Create a new array with virtual balloons (1) at both ends
+        int[] arr = new int[n + 2];
+        arr[0] = 1;
+        arr[n + 1] = 1;
+        // Copy original nums into arr
+        for (int i = 0; i < n; i++) {
+            arr[i + 1] = nums[i];
+        }
+        // dp[i][j] = maximum coins obtainable by bursting balloons
+        // in the range [i, j] (inclusive)
+        int[][] dp = new int[n + 2][n + 2];
+        // Length-based DP
+        for (int len = 1; len <= n; len++) {
+            for (int i = 1; i + len - 1 <= n; i++) {
+                int j = i + len - 1;
+                int maxi = 0;
+                // Try bursting each balloon last in range [i, j]
+                for (int idx = i; idx <= j; idx++) {
+                    int cost =
+                            arr[i - 1] * arr[idx] * arr[j + 1] +
+                            dp[i][idx - 1] +
+                            dp[idx + 1][j];
+                    maxi = Math.max(maxi, cost);
+                }
+                dp[i][j] = maxi;
+            }
+        }
+        // Maximum coins for bursting all balloons
+        return dp[1][n];
+    }
+}
+
+Time Complexity :- O(n^3).
+Space Complexity :- O(n^2).
