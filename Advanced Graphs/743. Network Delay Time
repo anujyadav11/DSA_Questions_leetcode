@@ -1,0 +1,58 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Dijkstra-based solution using a min-heap to compute network delay time from a single source.
+                   Use Dijkstra to find the shortest time from the source to all nodes, then take the maximum distance—if any node is unreachable, return -1.
+
+class Solution {
+    public int networkDelayTime(int[][] times, int n, int k) {
+        // Adjacency list: node -> list of {neighbor, weight}
+        Map<Integer, List<int[]>> adj = new HashMap<>();
+        // Build the graph from edge list
+        for (int[] edge : times) {
+            int u = edge[0];
+            int v = edge[1];
+            int w = edge[2];
+            adj.computeIfAbsent(u, x -> new ArrayList<>())
+               .add(new int[]{v, w});
+        }
+        // Min-heap storing {currentDistance, node}
+        PriorityQueue<int[]> pq =
+                new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+        // Distance array to store shortest time to each node
+        int[] result = new int[n + 1];
+        Arrays.fill(result, Integer.MAX_VALUE);
+        // Initialize source node
+        result[k] = 0;
+        pq.offer(new int[]{0, k});
+        // Dijkstra's algorithm
+        while (!pq.isEmpty()) {
+            int[] top = pq.poll();
+            int d = top[0];
+            int node = top[1];
+            // Ignore outdated entries from the priority queue
+            if (d > result[node]) continue;
+            // Relax all outgoing edges from current node
+            if (adj.containsKey(node)) {
+                for (int[] nei : adj.get(node)) {
+                    int adjNode = nei[0];
+                    int dist = nei[1];
+                    // If a shorter path is found, update and push to heap
+                    if (d + dist < result[adjNode]) {
+                        result[adjNode] = d + dist;
+                        pq.offer(new int[]{d + dist, adjNode});
+                    }
+                }
+            }
+        }
+        // Find the maximum distance among all nodes
+        int ans = Integer.MIN_VALUE;
+        for (int i = 1; i <= n; i++) {
+            ans = Math.max(ans, result[i]);
+        }
+        // If any node is unreachable, return -1
+        return ans == Integer.MAX_VALUE ? -1 : ans;
+    }
+}
+
+Time Complexity :- O(E log V).
+Space Complexity :- O(E + V).
