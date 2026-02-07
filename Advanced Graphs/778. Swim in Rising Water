@@ -51,3 +51,56 @@ class Solution {
 
 Time Complexity :- O(N^2 log N).
 Space Complexity :- O(N^2).
+
+Dijkstra Alogrithm Solution
+
+class Solution {
+    // Directions to move: down, up, right, left
+    int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    public int swimInWater(int[][] grid) {
+        int n = grid.length;
+        // result[i][j] stores the minimum time needed to reach cell (i, j)
+        int[][] result = new int[n][n];
+        for (int[] row : result)
+            Arrays.fill(row, Integer.MAX_VALUE);
+        // Min-heap prioritizing the cell with the smallest current time
+        PriorityQueue<int[]> pq =
+                new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        // Start from the top-left cell
+        result[0][0] = grid[0][0];
+        pq.offer(new int[]{grid[0][0], 0, 0}); // {time, row, col}
+        // Dijkstra-style traversal
+        while (!pq.isEmpty()) {
+            int[] curr = pq.poll();
+            int currTime = curr[0];
+            int i = curr[1];
+            int j = curr[2];
+            // If destination is reached, this is the minimum possible time
+            if (i == n - 1 && j == n - 1)
+                return currTime;
+            // Skip outdated entries
+            if (currTime > result[i][j])
+                continue;
+            // Explore all 4 neighboring cells
+            for (int[] dir : directions) {
+                int i_ = i + dir[0];
+                int j_ = j + dir[1];
+                // Boundary check
+                if (i_ >= 0 && i_ < n && j_ >= 0 && j_ < n) {
+                    // Time to enter the next cell
+                    int nextTime = Math.max(currTime, grid[i_][j_]);
+                    // Relax the edge if a better time is found
+                    if (nextTime < result[i_][j_]) {
+                        result[i_][j_] = nextTime;
+                        pq.offer(new int[]{nextTime, i_, j_});
+                    }
+                }
+            }
+        }
+        // Problem guarantees reachability
+        return -1;
+    }
+}
+Time Complexity :- O(N^2 log N).
+Space Complexity :- O(N^2).
+
