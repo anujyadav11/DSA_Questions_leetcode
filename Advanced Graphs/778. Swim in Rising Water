@@ -1,0 +1,53 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Binary search on time combined with DFS reachability to find the earliest moment a path exists.
+                   The earliest time must satisfy a monotonic reachability condition, making binary search + DFS an optimal solution.
+
+class Solution {
+    int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    int n;
+    public boolean possibleToReach(int[][] grid, int i, int j, int t, boolean[][] vis) {
+        // Boundary, visited, and height check
+        if (i < 0 || j < 0 || i >= n || j >= n || vis[i][j] || grid[i][j] > t) {
+            return false;
+        }
+        // Reached destination
+        if (i == n - 1 && j == n - 1) {
+            return true;
+        }
+        // Mark current cell as visited
+        vis[i][j] = true;
+        // Explore all 4 directions
+        for (int[] dir : dirs) {
+            int newi = i + dir[0];
+            int newj = j + dir[1];
+            if (possibleToReach(grid, newi, newj, t, vis)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public int swimInWater(int[][] grid) {
+        n = grid.length;
+        // Binary search range
+        int l = grid[0][0];
+        int r = n * n - 1;
+        int res = 0;
+        // Binary search on time
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            boolean[][] vis = new boolean[n][n];
+            // Check if reachable at time = mid
+            if (possibleToReach(grid, 0, 0, mid, vis)) {
+                res = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        return res;
+    }
+}
+
+Time Complexity :- O(N^2 log N).
+Space Complexity :- O(N^2).
