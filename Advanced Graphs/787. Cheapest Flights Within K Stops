@@ -1,0 +1,56 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - BFS-based solution with cost relaxation to find the cheapest flight within at most k stops.
+                   Use BFS up to k levels and relax edges like Bellman-Ford, ensuring we only consider paths with valid stop counts.
+
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        // distance[i] = minimum cost to reach city i within allowed stops so far
+        int[] distance = new int[n];
+        Arrays.fill(distance, Integer.MAX_VALUE);
+        // Adjacency list: u -> list of {v, cost}
+        Map<Integer, List<int[]>> adj = new HashMap<>();
+        for (int[] flight : flights) {
+            int u = flight[0];
+            int v = flight[1];
+            int cost = flight[2];
+            adj.computeIfAbsent(u, key -> new ArrayList<>())
+               .add(new int[]{v, cost});
+        }
+        // Queue stores {currentCity, totalCostSoFar}
+        Queue<int[]> queue = new LinkedList<>();
+        // Start BFS from source with cost 0
+        queue.offer(new int[]{src, 0});
+        distance[src] = 0;
+        // Level represents number of edges (stops) used
+        int level = 0;
+        // BFS level-by-level up to k stops
+        while (!queue.isEmpty() && level <= k) {
+            int size = queue.size();
+            // Process all nodes at the current level
+            for (int i = 0; i < size; i++) {
+                int[] current = queue.poll();
+                int u = current[0];
+                int d = current[1];
+                // Traverse all outgoing flights
+                List<int[]> neighbors = adj.getOrDefault(u, Collections.emptyList());
+                for (int[] neighbor : neighbors) {
+                    int v = neighbor[0];
+                    int cost = neighbor[1];
+                    // Relax edge if a cheaper cost is found
+                    if (distance[v] > d + cost) {
+                        distance[v] = d + cost;
+                        queue.offer(new int[]{v, d + cost});
+                    }
+                }
+            }
+            // Move to next stop level
+            level++;
+        }
+        // If destination unreachable within k stops, return -1
+        return distance[dst] == Integer.MAX_VALUE ? -1 : distance[dst];
+    }
+}
+
+Time Complexity :- O(K * E).
+Space Complexity :- O(V + E).
