@@ -1,0 +1,35 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy single-pass solution to insert and merge an interval into a sorted list of intervals.
+                   Process intervals in order: add non-overlapping ones, merge overlaps with the new interval, then append the rest.
+
+class Solution {
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        // Result array with maximum possible size
+        int[][] res = new int[intervals.length + 1][2];
+        // i -> pointer for input intervals
+        // j -> pointer for result array
+        int i = 0, j = 0;
+        // Step 1: Add all intervals that end before newInterval starts
+        while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+            res[j++] = intervals[i++];
+        }
+        // Step 2: Merge all overlapping intervals with newInterval
+        while (i < intervals.length && intervals[i][0] <= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        // Add the merged newInterval
+        res[j++] = newInterval;
+        // Step 3: Add all remaining intervals
+        while (i < intervals.length) {
+            res[j++] = intervals[i++];
+        }
+        // Return the result array trimmed to actual size
+        return java.util.Arrays.copyOf(res, j);
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
