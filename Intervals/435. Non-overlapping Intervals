@@ -1,0 +1,34 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy solution that minimizes interval removals by selecting intervals with the earliest finishing times.
+                   Sort by end time and greedily keep intervals that don’t overlap—remove the rest.
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        // Total number of intervals
+        int n = intervals.length;
+        // If there are no intervals, no removals are needed
+        if (n == 0)
+            return 0;
+        // Sort intervals by their end time (greedy choice)
+        Arrays.sort(intervals, Comparator.comparingInt(i -> i[1]));
+        // Count of non-overlapping intervals selected
+        int count = 1;
+        // Index of the last selected (non-overlapping) interval
+        int prevInterval = 0;
+        // Traverse remaining intervals
+        for (int i = 1; i < n; i++) {
+            // If current interval does not overlap with previous selected interval
+            if (intervals[i][0] >= intervals[prevInterval][1]) {
+                // Select current interval
+                prevInterval = i;
+                count++;
+            }
+        }
+        // Minimum removals = total intervals - maximum non-overlapping intervals
+        return n - count;
+    }
+}
+
+Time Complexity :- O(N log N).
+Space Complexity :- O(1).
