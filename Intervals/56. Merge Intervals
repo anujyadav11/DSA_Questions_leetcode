@@ -1,0 +1,37 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy solution that merges overlapping intervals after sorting by start time.
+                   Sort intervals by start time, then merge consecutively overlapping ones in a single pass.
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        // If there are 0 or 1 intervals, no merging is needed
+        if (intervals.length <= 1)
+            return intervals;
+        // Sort intervals based on starting time
+        Arrays.sort(intervals, Comparator.comparingInt(i -> i[0]));
+        // List to store merged intervals
+        List<int[]> res = new ArrayList<>();
+        // Initialize with the first interval
+        int[] newInterval = intervals[0];
+        res.add(newInterval);
+        // Traverse all intervals
+        for (int[] interval : intervals) {
+            // If current interval overlaps with the last merged interval
+            if (interval[0] <= newInterval[1]) {
+                // Merge by extending the end time
+                newInterval[1] = Math.max(newInterval[1], interval[1]);
+            } 
+            // If no overlap, start a new merged interval
+            else {
+                newInterval = interval;
+                res.add(newInterval);
+            }
+        }
+        // Convert list to array and return
+        return res.toArray(new int[res.size()][]);
+    }
+}
+
+Time Complexity :- O(N log N).
+Space Complexity :- O(N).
