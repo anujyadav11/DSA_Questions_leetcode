@@ -1,0 +1,34 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Uses cycle detection with a hash set to determine whether a number is happy.
+                   Either the process reaches 1, or it loops—use a set to detect repetition and stop early.
+
+class Solution {
+    public boolean isHappy(int n) {
+        // Set to track numbers already seen to detect cycles
+        Set<Integer> usedInt = new HashSet<>();
+        // Repeat until number becomes 1 or a cycle is detected
+        while (true) {
+            int sum = 0;
+            // Compute sum of squares of digits
+            while (n != 0) {
+                int digit = n % 10;
+                sum += digit * digit; // square of digit
+                n /= 10;
+            }
+            // If we reach 1, it's a happy number
+            if (sum == 1) return true;
+            // Prepare for next iteration
+            n = sum;
+            // If we've seen this number before, a cycle exists
+            if (usedInt.contains(n)) {
+                return false;
+            }
+            // Mark the number as seen
+            usedInt.add(n);
+        }
+    }
+}
+
+Time Complexity :- O(log n).
+Space Complexity :- O(log n).
