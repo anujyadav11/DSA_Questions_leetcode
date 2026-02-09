@@ -1,0 +1,31 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Simulates integer increment by handling carry propagation from right to left.
+                   Add from the end, stop early if no carry remains; only allocate a new array when all digits are 9.
+
+class Solution {
+    public int[] plusOne(int[] digits) {
+        // Length of the digits array
+        int n = digits.length;
+        // Start from the last digit
+        int i = n - 1;
+        // Traverse digits from right to left
+        while (i >= 0) {
+            // If current digit is less than 9, just increment and return
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+            // If digit is 9, it becomes 0 due to carry
+            digits[i] = 0;
+            i--;
+        }
+        // If all digits were 9, we need an extra digit
+        int[] res = new int[n + 1];
+        res[0] = 1; // e.g., 999 + 1 = 1000
+        return res;
+    }
+}
+
+Time Complexity :- O(n).
+Space Complexity :- O(n).
