@@ -1,0 +1,49 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Layer-by-layer traversal to collect matrix elements in spiral order using boundary pointers.
+                   Use four pointers to track the current layer and shrink them after each directional traversal.
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        // List to store elements in spiral order
+        List<Integer> res = new ArrayList<>();
+        // Number of rows and columns
+        int n = matrix.length;
+        int m = matrix[0].length;
+        // Define the current boundaries of the spiral
+        int left = 0, right = m - 1;
+        int top = 0, bottom = n - 1;
+        // Continue until all boundaries overlap
+        while (top <= bottom && left <= right) {
+            // Traverse the top row from left to right
+            for (int i = left; i <= right; i++) {
+                res.add(matrix[top][i]);
+            }
+            top++; // Move top boundary downward
+            // Traverse the right column from top to bottom
+            for (int i = top; i <= bottom; i++) {
+                res.add(matrix[i][right]);
+            }
+            right--; // Move right boundary leftward
+            // Traverse the bottom row from right to left (if valid)
+            if (top <= bottom) {
+                for (int i = right; i >= left; i--) {
+                    res.add(matrix[bottom][i]);
+                }
+                bottom--; // Move bottom boundary upward
+            }
+            // Traverse the left column from bottom to top (if valid)
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    res.add(matrix[i][left]);
+                }
+                left++; // Move left boundary rightward
+            }
+        }
+        // Return the spiral traversal result
+        return res;
+    }
+}
+
+Time Complexity :- O(N * M).
+Space Complexity :- O(N * M).
