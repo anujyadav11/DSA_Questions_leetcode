@@ -1,0 +1,52 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - In-place matrix zeroing using the first row and column as markers for constant space optimization.
+                   Reuse the first row and column as marker arrays, and handle them carefully using separate flags to avoid overwriting original information.
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        // Flags to track whether first row or first column should be zeroed
+        boolean firstRow = false, firstCol = false;
+        // Step 1: Use first row and first column as markers
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                // If a zero is found
+                if (matrix[i][j] == 0) {
+                    // Mark if the zero is in first row
+                    if (i == 0)
+                        firstRow = true;
+                    // Mark if the zero is in first column
+                    if (j == 0)
+                        firstCol = true;
+                    // Mark corresponding row and column in first row/column
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+        // Step 2: Set cells to zero based on markers (excluding first row & column)
+        for (int i = 1; i < matrix.length; i++) {
+            for (int j = 1; j < matrix[0].length; j++) {
+                // If either row or column is marked
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        // Step 3: Zero out the first row if needed
+        if (firstRow) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[0][j] = 0;
+            }
+        }
+        // Step 4: Zero out the first column if needed
+        if (firstCol) {
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+}
+
+Time Complexity :- O(m * n).
+Space Complexity :- O(1).
