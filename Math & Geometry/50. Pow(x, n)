@@ -1,0 +1,27 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Fast exponentiation using divide-and-conquer to compute power in logarithmic time.
+                   Use binary exponentiation: square the base and halve the power to reduce time complexity from linear to logarithmic.
+
+class Solution {
+    public double myPow(double x, int n) {
+        // Convert n to long to safely handle Integer.MIN_VALUE
+        return solve(x, (long) n);
+    }
+    public double solve(double x, long n) {
+        // Base case: x^0 = 1
+        if (n == 0)
+            return 1;
+        // If power is negative, convert to reciprocal
+        if (n < 0)
+            return solve(1 / x, -n);
+        // If n is even, use exponentiation by squaring
+        if (n % 2 == 0)
+            return solve(x * x, n / 2);
+        // If n is odd, multiply once by x and reduce the problem
+        return x * solve(x * x, (n - 1) / 2);
+    }
+}
+
+Time Complexity :- O(log n).
+Space Complexity :- O(log n).
