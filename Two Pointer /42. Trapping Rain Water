@@ -1,0 +1,38 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Uses prefix and suffix maximum arrays to compute trapped rainwater in linear time.
+                   At each index, trapped water equals min(max left, max right) minus height—precompute both in linear time.
+
+class Solution {
+    public int trap(int[] height) {
+        // Length of the elevation map
+        int n = height.length;
+        // If no bars exist, no water can be trapped
+        if (n == 0)  return 0;
+        // Arrays to store maximum height to the left and right of each index
+        int[] leftMax = new int[n];
+        int[] rightMax = new int[n];
+        // First element's left max is itself
+        leftMax[0] = height[0];
+        // Last element's right max is itself
+        rightMax[n - 1] = height[n - 1];
+        // Fill leftMax array
+        for (int i = 1; i < n; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+        }
+        // Fill rightMax array
+        for (int i = n - 2; i >= 0; i--) {
+            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+        }
+        // Calculate total trapped water
+        int totalWater = 0;
+        for (int i = 0; i < n; i++) {
+            // Water at each index = min(leftMax, rightMax) - height
+            totalWater += Math.min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return totalWater;
+    }
+}
+
+Time Complexity :- O(n).
+Space Complexity :- O(n).
