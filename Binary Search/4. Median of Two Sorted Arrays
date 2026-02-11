@@ -1,0 +1,51 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Binary search partition approach to find median of two sorted arrays in logarithmic time.
+                   Always binary search the smaller array to guarantee valid partition bounds and achieve O(log(min(n,m))) time.
+
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        // Ensure nums1 is the smaller array
+        if (nums1.length > nums2.length) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+        int m = nums1.length;
+        int n = nums2.length;
+        int totalLength = m + n;
+        int low = 0, high = m;
+        while (low <= high) {
+            // Partition of first array
+            int partitionX = (low + high) / 2;
+            // Partition of the second array
+            int partitionY = (totalLength + 1) / 2 - partitionX;
+            // Handle boundary conditions
+            int l1 = partitionX == 0 ? Integer.MIN_VALUE : nums1[partitionX - 1];
+            int r1 = partitionX == m ? Integer.MAX_VALUE : nums1[partitionX];
+            int l2 = partitionY == 0 ? Integer.MIN_VALUE : nums2[partitionY - 1];
+            int r2 = partitionY == n ? Integer.MAX_VALUE : nums2[partitionY];
+            // Correct partition found
+            if (l1 <= r2 && l2 <= r1) {
+                // If total length is even
+                if (totalLength % 2 == 0) {
+                    return (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0;
+                }
+                // If odd
+                else {
+                    return Math.max(l1, l2);
+                }
+            }
+            // Move left in nums1
+            else if (l1 > r2) {
+                high = partitionX - 1;
+            }
+            // Move right in nums1
+            else {
+                low = partitionX + 1;
+            }
+        }
+        return 0; // Should never reach here
+    }
+}
+
+Time Complexity :- O(log(min(m, n))).
+Space Complexity :- O(1).
