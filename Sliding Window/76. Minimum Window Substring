@@ -1,0 +1,68 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Sliding window with frequency tracking to find the smallest substring containing all characters of t.
+                   Maintain a required character counter and shrink the window only when all characters are satisfied.
+
+class Solution {
+    public String minWindow(String s, String t) {
+        // Length of main string
+        int n = s.length();
+        // If target string is longer than s, impossible
+        if (t.length() > n) return "";
+        // Frequency map storing required characters from t
+        Map<Character, Integer> map = new HashMap<>();
+        // Fill frequency map
+        for (char ch : t.toCharArray()) {
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+        // Total number of characters still required
+        int reqCnt = t.length();
+        // Sliding window pointers
+        int i = 0, j = 0;
+        // Track minimum window size found
+        int winSize = Integer.MAX_VALUE;
+        // Track starting index of best window
+        int start_i = 0;
+        // Expand window using j
+        while (j < n) {
+            char ch = s.charAt(j);
+            // If character is part of target
+            if (map.containsKey(ch)) {
+                // If still needed, reduce required count
+                if (map.get(ch) > 0) {
+                    reqCnt--;
+                }
+                // Decrease frequency (can go negative if extra)
+                map.put(ch, map.get(ch) - 1);
+            }
+            // When we have a valid window
+            while (reqCnt == 0) {
+                int curSize = j - i + 1;
+                // Update minimum window
+                if (curSize < winSize) {
+                    winSize = curSize;
+                    start_i = i;
+                }
+                // Try to shrink window from left
+                char leftChar = s.charAt(i);
+                if (map.containsKey(leftChar)) {
+                    // Restore frequency
+                    map.put(leftChar, map.get(leftChar) + 1);
+                    // If this character becomes needed again
+                    if (map.get(leftChar) > 0) {
+                        reqCnt++;
+                    }
+                }
+                i++; // Move left pointer
+            }
+            j++; // Expand right pointer
+        }
+        // Return result
+        return winSize == Integer.MAX_VALUE
+                ? ""
+                : s.substring(start_i, start_i + winSize);
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(K). size of the window.
