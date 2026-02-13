@@ -1,0 +1,36 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Greedy solution using sorting and a stack to simulate car fleets merging by arrival time.
+                   Process cars from closest to target; if a car behind arrives later, it forms a new fleet, otherwise it merges.
+
+class Solution {
+    public int carFleet(int target, int[] position, int[] speed) {
+        // If only one car, it forms one fleet
+        if (position.length == 1)  return 1;
+        // Stack to store arrival times of fleets
+        Stack<Double> st = new Stack<>();
+        // Combine position and speed into a single 2D array
+        int[][] combine = new int[position.length][2];
+        for (int i = 0; i < position.length; i++) {
+            combine[i][0] = position[i]; // position
+            combine[i][1] = speed[i];    // speed
+        }
+        // Sort cars by position (ascending)
+        Arrays.sort(combine, Comparator.comparingInt(o -> o[0]));
+        // Traverse from the car closest to target
+        for (int i = combine.length - 1; i >= 0; i--) {
+            // Time required to reach target
+            double currTime = (double) (target - combine[i][0]) / combine[i][1];
+            // If current car catches up to previous fleet
+            if (!st.isEmpty() && currTime <= st.peek()) {
+                continue;  // It joins the fleet
+            }
+            // Otherwise, it forms a new fleet
+            st.push(currTime);
+        }
+        return st.size();
+    }
+}
+
+Time Complexity :- O(n log n). because of sorting the array.
+Space Complexity :- O(n). because we are using stack.
