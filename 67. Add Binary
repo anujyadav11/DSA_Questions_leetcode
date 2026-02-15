@@ -1,0 +1,36 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Simulates binary addition using two pointers and carry handling.
+                   Process from right to left, maintain carry, append result in reverse order, then reverse at the end.
+
+class Solution {
+    public String addBinary(String a, String b) {
+        // StringBuilder to build result (in reverse order first)
+        StringBuilder res = new StringBuilder();
+        // Pointers starting from end of both strings
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        // Carry for binary addition
+        int carry = 0;
+        // Continue until both strings are processed
+        while (i >= 0 || j >= 0) {
+            // Start sum with carry
+            int sum = carry;
+            // Add digit from string a if available
+            if (i >= 0) sum += a.charAt(i--) - '0';
+            // Add digit from string b if available
+            if (j >= 0) sum += b.charAt(j--) - '0';
+            // If sum >= 2, carry becomes 1
+            carry = sum > 1 ? 1 : 0;
+            // Append current bit (sum % 2)
+            res.append(sum % 2);
+        }
+        // If carry remains, append it
+        if (carry != 0) res.append(carry);
+        // Reverse result because we built it backwards
+        return res.reverse().toString();
+    }
+}
+
+Time Complexity :- O(max(n, m)).
+Space Complexity :- O(max(n, m)).
