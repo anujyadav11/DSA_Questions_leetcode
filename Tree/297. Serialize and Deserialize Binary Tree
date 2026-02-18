@@ -1,0 +1,64 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - BFS-based serialization and deserialization of binary tree preserving null structure.
+                   Use level-order traversal and include null markers to reconstruct exact tree shape.
+
+public class Codec {
+    // Encodes a tree to a single string using Level Order Traversal (BFS)
+    public String serialize(TreeNode root) {
+        // If tree is empty
+        if (root == null) return "";
+        // Queue for BFS
+        Queue<TreeNode> q = new LinkedList<>();
+        // StringBuilder to store serialized result
+        StringBuilder res = new StringBuilder();
+        q.add(root);
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            // If node is null, append placeholder
+            if (node == null) {
+                res.append("n ");
+                continue;
+            }
+            // Append current node value
+            res.append(node.val + " ");
+            // Add children (even if null to preserve structure)
+            q.add(node.left);
+            q.add(node.right);
+        }
+        return res.toString();
+    }
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        // Fix: String comparison must use .equals()
+        if (data.equals("")) return null;
+        Queue<TreeNode> q = new LinkedList<>();
+        // Split serialized string by space
+        String[] values = data.split(" ");
+        // Create root node
+        TreeNode root = new TreeNode(Integer.parseInt(values[0]));
+        q.add(root);
+        // Start from index 1 (since 0 is root)
+        for (int i = 1; i < values.length; i++) {
+            TreeNode parent = q.poll();
+            // Process left child
+            if (!values[i].equals("n")) {
+                TreeNode left = new TreeNode(Integer.parseInt(values[i]));
+                parent.left = left;
+                q.add(left);
+            }
+            // Move to next value for right child
+            i++;
+            // Boundary check (important)
+            if (i < values.length && !values[i].equals("n")) {
+                TreeNode right = new TreeNode(Integer.parseInt(values[i]));
+                parent.right = right;
+                q.add(right);
+            }
+        }
+        return root;
+    }
+}
+
+Time Complexity :- O(n).
+Space Complexity :- O(n).
