@@ -1,0 +1,49 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Hierholzer’s algorithm to find lexicographically smallest Eulerian path in directed graph.
+                   This is an Eulerian path problem — use post-order DFS and reverse the result to reconstruct itinerary.
+
+class Solution {
+    // Adjacency list: source -> list of destinations
+    Map<String, List<String>> graph;
+    // Stores final itinerary (Eulerian path)
+    List<String> itinerary;
+    // DFS using Hierholzer’s algorithm
+    public void dfs(String from) {
+        // Get all destinations from current airport
+        List<String> to = graph.get(from);
+        // While there are outgoing edges
+        while (to != null && !to.isEmpty()) {
+            // Remove last destination (smallest lexicographically after reverse sort)
+            String nextTo = to.remove(to.size() - 1);
+            // Visit next airport
+            dfs(nextTo);
+        }
+        // Add airport to itinerary AFTER visiting all edges
+        // (Post-order insertion)
+        itinerary.add(from);
+    }
+    public List<String> findItinerary(List<List<String>> tickets) {
+        graph = new HashMap<>();
+        itinerary = new ArrayList<>();
+        // Build adjacency list
+        for (List<String> ticket : tickets) {
+            graph.computeIfAbsent(ticket.get(0),
+                    k -> new ArrayList<>())
+                    .add(ticket.get(1));
+        }
+        // Sort destinations in reverse lexicographical order
+        // So we can pop smallest lexicographical destination
+        for (List<String> to : graph.values()) {
+            to.sort(Collections.reverseOrder());
+        }
+        // Start DFS from JFK
+        dfs("JFK");
+        // Reverse because nodes were added post-order
+        Collections.reverse(itinerary);
+        return itinerary;
+    }
+}
+
+Time Complexity :- O(E log E).
+Space Complexity :- O(V + E).
