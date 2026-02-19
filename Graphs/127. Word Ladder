@@ -1,0 +1,58 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - BFS-based shortest path solution for Word Ladder using character-level transformations.
+                   This is a shortest path problem in an unweighted graph — BFS guarantees minimum transformations.
+
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        // Queue for BFS: stores (currentWord, currentSteps)
+        Queue<Pair> q = new LinkedList<>();
+        // Start BFS from beginWord with step count 1
+        q.add(new Pair(beginWord, 1));
+        // Store wordList in a HashSet for O(1) lookup
+        Set<String> set = new HashSet<>();
+        for (String word : wordList)
+            set.add(word);
+        // Remove beginWord if present (avoid revisiting)
+        set.remove(beginWord);
+        // BFS traversal
+        while (!q.isEmpty()) {
+            String word = q.peek().first;
+            int steps = q.peek().second;
+            q.remove();
+            // If endWord reached → return steps
+            if (word.equals(endWord))
+                return steps;
+            // Try changing each character of current word
+            for (int i = 0; i < word.length(); i++) {
+                for (char ch = 'a'; ch <= 'z'; ch++) {
+                    char[] replaceChar = word.toCharArray();
+                    // Replace one character at position i
+                    replaceChar[i] = ch;
+                    String replaceWord = new String(replaceChar);
+                    // If new word exists in dictionary
+                    if (set.contains(replaceWord)) {
+                        // Remove to avoid revisiting
+                        set.remove(replaceWord);
+                        // Add to queue with incremented step
+                        q.add(new Pair(replaceWord, steps + 1));
+                    }
+                }
+            }
+        }
+        // If no transformation possible
+        return 0;
+    }
+}
+// Helper class to store word and its transformation depth
+class Pair {
+    String first;
+    int second;
+    Pair(String _first, int _second) {
+        this.first = _first;
+        this.second = _second;
+    }
+}
+
+Time Complexity :- O(n * W * 26).
+Space Complexity :- O(n).
