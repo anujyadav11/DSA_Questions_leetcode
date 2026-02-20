@@ -1,0 +1,65 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Trie-based WordDictionary supporting wildcard '.' search using DFS backtracking.
+                   Use Trie for prefix search and DFS when encountering '.' to explore all possible branches.
+
+class WordDictionary {
+    // Trie Node definition
+    static class TrieNode {
+        // 26 lowercase English letters
+        TrieNode[] children = new TrieNode[26];
+        // Marks end of word
+        boolean isEndOfWord = false;
+    }
+    // Root of Trie
+    private TrieNode root;
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+    // Add a word into the Trie
+    public void addWord(String word) {
+        TrieNode crawler = root;
+        for (int i = 0; i < word.length(); i++) {
+            int index = word.charAt(i) - 'a';
+            // Create node if not present
+            if (crawler.children[index] == null) {
+                crawler.children[index] = new TrieNode();
+            }
+            crawler = crawler.children[index];
+        }
+        // Mark end of word
+        crawler.isEndOfWord = true;
+    }
+    // Helper method to search word (supports '.')
+    private boolean searchUtil(TrieNode node, String word, int pos) {
+        // If reached end of word
+        if (pos == word.length()) {
+            return node.isEndOfWord;
+        }
+        char ch = word.charAt(pos);
+        // If wildcard '.', try all possibilities
+        if (ch == '.') {
+            for (int j = 0; j < 26; j++) {
+                if (node.children[j] != null) {
+                    if (searchUtil(node.children[j], word, pos + 1))
+                        return true;
+                }
+            }
+            return false;
+        }
+        // Normal character case
+        int index = ch - 'a';
+        if (node.children[index] == null) {
+            return false;
+        }
+        return searchUtil(node.children[index], word, pos + 1);
+    }
+    // Search word in Trie
+    public boolean search(String word) {
+        return searchUtil(root, word, 0);
+    }
+}
+
+Time Complexity :- O(26^L).
+Space Complexity :- O(N * L).
