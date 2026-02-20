@@ -1,0 +1,60 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Trie implementation supporting efficient insert, search, and prefix lookup in O(L) time.
+                   Trie converts string operations from O(N × L) to O(L) by storing shared prefixes efficiently.
+
+class TrieNode {
+    // Assuming lowercase English letters
+    TrieNode[] children;
+    boolean isEnd;
+    public TrieNode() {
+        children = new TrieNode[26];
+        isEnd = false;
+    }
+}
+class Trie {
+    private TrieNode root;
+    public Trie() {
+        // Initialize the Trie with an empty root node.
+        root = new TrieNode();
+    }
+    // Insert a word into the Trie.
+    public void insert(String word) {
+        TrieNode node = root;
+        for (char ch : word.toCharArray()) {
+            int index = ch - 'a';
+            if (node.children[index] == null) {
+                node.children[index] = new TrieNode();
+            }
+            node = node.children[index];
+        }
+        node.isEnd = true; // Mark the end of the word.
+    }
+    // Search for a word in the Trie.
+    public boolean search(String word) {
+        TrieNode node = root;
+        for (char ch : word.toCharArray()) {
+            int index = ch - 'a';
+            if (node.children[index] == null) {
+                return false; // The prefix doesn't exist in the Trie.
+            }
+            node = node.children[index];
+        }
+        return node.isEnd; // Check if the word ends at this node.
+    }
+    // Check if there is any word in the Trie that starts with the given prefix.
+    public boolean startsWith(String prefix) {
+        TrieNode node = root;
+        for (char ch : prefix.toCharArray()) {
+            int index = ch - 'a';
+            if (node.children[index] == null) {
+                return false; // The prefix doesn't exist in the Trie.
+            }
+            node = node.children[index];
+        }
+        return true; // The Trie contains words with the given prefix.
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N * L).
