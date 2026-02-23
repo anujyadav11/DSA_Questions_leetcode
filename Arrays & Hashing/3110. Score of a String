@@ -1,0 +1,24 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Compute the sum of absolute ASCII differences between every pair of adjacent characters using a single linear traversal.
+
+class Solution {
+    public int scoreOfString(String s) {
+        int sum = 0;  // Variable to store the final score
+        // Loop through string till second last character
+        // because we compare current character with next character
+        for (int i = 0; i < s.length() - 1; i++) {
+            // Get ASCII value of current character
+            int first = s.charAt(i);
+            // Get ASCII value of next character
+            int second = s.charAt(i + 1);
+            // Add absolute difference of ASCII values to sum
+            sum += Math.abs(first - second);
+        }
+        // Return the final computed score
+        return sum; 
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
