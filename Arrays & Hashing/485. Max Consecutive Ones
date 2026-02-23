@@ -1,0 +1,28 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use a single linear traversal to track and update the longest streak of consecutive 1s using a running counter.
+
+class Solution {
+    public int findMaxConsecutiveOnes(int[] nums) {
+        int curr = 0;   // Tracks current streak of consecutive 1s
+        int max = 0;    // Stores maximum streak found so far
+        // Traverse the array
+        for (int i = 0; i < nums.length; i++) {
+            // If current element is 1, increase current streak
+            if (nums[i] == 1) {
+                curr++;
+            } 
+            // If element is 0, reset current streak
+            else {
+                curr = 0;
+            }
+            // Update maximum streak
+            max = Math.max(max, curr);
+        }
+        // Return maximum consecutive 1s
+        return max;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
