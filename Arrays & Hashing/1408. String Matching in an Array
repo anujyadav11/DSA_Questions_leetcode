@@ -1,0 +1,31 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use pairwise comparison to check if any word is a substring of another using built-in string matching.
+                   “For each word, I check if it exists as a substring in any other word. Since constraints are small, a brute-force O(n²) approach with contains() is sufficient.”
+
+class Solution {
+    public List<String> stringMatching(String[] words) {
+        List<String> ans = new ArrayList<>();  // Stores words that are substrings of another word
+        // Iterate over each word as potential substring
+        for (int i = 0; i < words.length; i++) {
+            // Compare with every other word
+            for (int j = 0; j < words.length; j++) {
+                // Skip comparing the word with itself
+                if (i == j)
+                    continue;
+                // If words[i] is a substring of words[j]
+                if (words[j].contains(words[i])) {
+                    // Add it to result
+                    ans.add(words[i]);
+                    // No need to check further once found
+                    break;
+                }
+            }
+        }        
+        // Return all substring words
+        return ans;
+    }
+}
+
+Time Complexity :- O(n^2 * m).
+Space Complexity :- O(1).
