@@ -1,0 +1,36 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use two running counters to track increasing and decreasing streaks in a single linear traversal.
+
+class Solution {
+    public int longestMonotonicSubarray(int[] nums) {
+        int n = nums.length;     // Length of array
+        int dec = 1;             // Length of current decreasing subarray
+        int inc = 1;             // Length of current increasing subarray
+        int res = 1;             // Stores maximum monotonic subarray length
+        // Traverse from second element
+        for (int i = 1; i < n; i++) {
+            // If strictly increasing
+            if (nums[i] > nums[i - 1]) {
+                inc++;           // Increase increasing counter
+                dec = 1;         // Reset decreasing counter
+            } 
+            // If strictly decreasing
+            else if (nums[i] < nums[i - 1]) {
+                dec++;           // Increase decreasing counter
+                inc = 1;         // Reset increasing counter
+            } 
+            // If equal, reset both
+            else {
+                inc = 1;
+                dec = 1;
+            }
+            // Update result with max of both
+            res = Math.max(res, Math.max(inc, dec));
+        }
+        return res;  // Return maximum monotonic length
+    }
+}
+
+Time Complexity :- O(n).
+Space Complexity :- O(1).
