@@ -1,0 +1,35 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Count character frequencies and compute the difference between the largest odd frequency and smallest even frequency.
+                   “Since only lowercase letters exist, I use a fixed 26-size frequency array, then greedily track the maximum odd and minimum even counts in one pass.”
+
+class Solution {
+    public int maxDifference(String s) {
+        int n = s.length(); // Length of string
+        int[] freq = new int[26]; // Frequency array for lowercase letters
+        // Count frequency of each character
+        for (char ch : s.toCharArray()) {
+            freq[ch - 'a']++; // Map 'a' → 0, 'b' → 1 ... 'z' → 25
+        }
+        int maxOdd = 0; // Stores maximum odd frequency
+        int minEven = n + 1; // Stores minimum even frequency (initialized large)
+        // Traverse frequency array
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] == 0)
+                continue; // Skip characters not present
+            // If frequency is even
+            if (freq[i] % 2 == 0) {
+                minEven = Math.min(minEven, freq[i]);
+            }
+            // If frequency is odd
+            else {
+                maxOdd = Math.max(maxOdd, freq[i]);
+            }
+        }
+        // Return difference
+        return maxOdd - minEven;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
