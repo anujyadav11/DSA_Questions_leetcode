@@ -1,0 +1,31 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use a HashMap to count frequencies and return the k-th string that appears exactly once while preserving order.
+                   “Since order matters, I first count frequencies using a HashMap, then scan the array again to locate the k-th string with frequency one.”
+
+class Solution {
+    public String kthDistinct(String[] arr, int k) {
+        // Map to store frequency of each string
+        Map<String, Integer> freq = new HashMap<>();
+        // Count frequency
+        for (String str : arr) {
+            freq.put(str, freq.getOrDefault(str, 0) + 1);
+        }
+        // Traverse in original order
+        for (String str : arr) {
+            // If string appears exactly once
+            if (freq.get(str) == 1) {
+                k--;  // Decrease k
+                // If this is the kth distinct string
+                if (k == 0) {
+                    return str;
+                }
+            }
+        
+        // If fewer than k distinct strings
+        return "";
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
