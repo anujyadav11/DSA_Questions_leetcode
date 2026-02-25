@@ -1,0 +1,29 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use a single-pass sliding window to compute the maximum sum of a strictly ascending subarray.
+                   “This is a constrained Kadane’s approach where I only extend the window if the sequence remains strictly increasing, otherwise I reset.”
+
+class Solution {
+    public int maxAscendingSum(int[] nums) {
+        int n = nums.length; // Length of array
+        int maxSum = nums[0]; // Stores maximum ascending subarray sum
+        int sum = nums[0]; // Current ascending subarray sum
+        // Traverse from second element
+        for (int i = 1; i < n; i++) {
+            // If strictly increasing, extend current subarray
+            if (nums[i] > nums[i - 1]) {
+                sum += nums[i];
+            }
+            // Otherwise, reset sum to current element
+            else {
+                maxSum = Math.max(maxSum, sum);
+                sum = nums[i];
+            }
+        }
+        // Final comparison after loop
+        return Math.max(maxSum, sum);
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(1).
