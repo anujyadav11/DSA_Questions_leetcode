@@ -1,0 +1,38 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Use a HashSet to detect the duplicate and identify the missing number in the range 1 to n².
+                   “Since numbers are in a fixed range 1 to n², I use a HashSet to detect the duplicate and then scan the range to find the missing number.”
+
+class Solution {
+    public int[] findMissingAndRepeatedValues(int[][] grid) { 
+        int n = grid.length;            // Grid dimension (n x n)
+        int m = grid[0].length;         // Same as n (since square grid)
+        Set<Integer> set = new HashSet<>();  // To track seen numbers
+        int doubleVal = 0;  // Stores repeated value
+        int missing = 0;    // Stores missing value
+        // Traverse the grid
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // If number already exists in set → it's the duplicate
+                if (set.contains(grid[i][j])) {
+                    doubleVal = grid[i][j];
+                }
+                // Add number to set
+                set.add(grid[i][j]);
+            }
+        }
+        // Find missing number in range [1, n*n]
+        for (int i = 1; i <= n * n; i++) {
+            // If number not found in set → it's missing
+            if (!set.contains(i)) {
+                missing = i;
+                break;
+            }
+        }
+        // Return result as {duplicate, missing}
+        return new int[] { doubleVal, missing };
+    }
+}
+
+Time Complexity :- O(N^2).
+Space Complexity :- O(N^2).
