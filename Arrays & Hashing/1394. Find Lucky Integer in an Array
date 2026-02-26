@@ -1,0 +1,29 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Count frequencies using HashMap and return the largest number whose value equals its occurrence.
+                  “Since we need frequency comparison, I use a HashMap to count occurrences and then check which number equals its count.”
+
+class Solution {
+    public int findLucky(int[] arr) {
+        // Map to store frequency of each number
+        HashMap<Integer, Integer> map = new HashMap<>();
+        // Count frequency of each element
+        for (int num : arr) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        int max = -1;  // Stores largest lucky number
+        // Traverse through all unique numbers
+        for (int key : map.keySet()) {
+            // If number equals its frequency → lucky number
+            if (key == map.get(key)) {
+                // Keep the maximum lucky number
+                max = Math.max(max, key);
+            }
+        }        
+        // Return largest lucky number or -1 if none exists
+        return max;
+    }
+}
+
+Time Complexity :- O(N).
+Space Complexity :- O(N).
