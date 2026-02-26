@@ -1,6 +1,7 @@
 /**************************************************** JAVA *******************************************/
 
-Better Approach - using HashMap to store numbers and their index, then findthe  target to get the value from the map and their index
+// Better Approach - using HashMap to store numbers and their index, then findthe  target to get the value from the map and their index
+
 class Solution {
     public int[] twoSum(int[] nums, int target) {
         int n = nums.length; // Get the length of the array
@@ -19,10 +20,10 @@ class Solution {
         return new int[]{};
     }
 }
-Time Complexity :- O(N).
-Space Complexity :- O(N).
+// Time Complexity :- O(N).
+// Space Complexity :- O(N).
 
-Brute Force Approach - using two loops outer loop for picking the first elements, and an inner loop for check pair with the first element.
+// Brute Force Approach - using two loops outer loop for picking the first elements, and an inner loop for check pair with the first element.
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
@@ -41,5 +42,5 @@ class Solution {
         return new int[]{};
     }
 }
-Time Complexity :- O(N^2).
-Space Complexity :- O(1).
+// Time Complexity :- O(N^2).
+// Space Complexity :- O(1).
