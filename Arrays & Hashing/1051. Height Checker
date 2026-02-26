@@ -1,0 +1,28 @@
+/*********************************************** JAVA **************************************************/
+
+Optimal Solution - Compare the original array with its sorted version and count index mismatches.
+                   “I clone the array, sort it, and count how many indices differ from the original.”
+
+class Solution {
+    public int heightChecker(int[] heights) {
+        int n = heights.length;   // Length of array
+        int count = 0;            // Counts mismatched positions
+        int expected[] = new int[n];  // Copy of original array
+        // Copy elements into expected array
+        for (int i = 0; i < n; i++) {
+            expected[i] = heights[i];
+        }
+        // Sort the copied array
+        Arrays.sort(expected);
+        // Compare original and sorted arrays
+        for (int i = 0; i < n; i++) {
+            if (heights[i] != expected[i]) {
+                count++;          // Increment if mismatch found
+            }
+        }
+        return count;  // Return total mismatches
+    }
+}
+
+Time Complexity :- O(n log n).
+Space Complexity :- O(n).
