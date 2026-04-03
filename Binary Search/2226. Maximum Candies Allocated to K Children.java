@@ -1,6 +1,6 @@
 /*********************************************** JAVA **************************************************/
 
-// Optimal Solution - Maximizes candies per child using binary search on the answer, greedily verifying feasibility by summing floor divisions of each pile against k children.
+// Optimal Solution - Maximises candies per child using binary search on the answer, greedily verifying feasibility by summing floor divisions of each pile against k children.
 /*  "Binary search on answer works when the feasibility function is monotonic — if mid candies per child is feasible, any smaller amount is also feasible. 
     The key check is sum(pile/mid) >= k. Use long for total sum and k since pile sizes can overflow int when accumulated." */
 
