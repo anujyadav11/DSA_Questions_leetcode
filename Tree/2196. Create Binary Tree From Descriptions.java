@@ -11,7 +11,6 @@ class Solution {
         // tracks all child nodes — root is the only non-child
         Set<Integer> childSet = new HashSet<>();
         for (int[] des : descriptions) {
-            // FIXED: removed stray 'z' character
             int parent = des[0];
             int child = des[1];
             int isLeft = des[2];
