@@ -32,3 +32,37 @@ class Solution {
 
 // Time Complexity :- O(n^2).
 // Space Complexity :- O(n).
+
+// BFS solution 
+class Solution {
+    int n;
+
+    public int findCircleNum(int[][] isConnected) {
+        n = isConnected.length;
+        boolean[] vis = new boolean[n];
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                bfs(isConnected, i, vis);
+                count++;
+            }
+        }
+        return count;
+    }
+    public void bfs(int[][] nums, int i, boolean[] vis) {
+        Queue<Integer> que = new LinkedList<>();
+        que.offer(i);
+        vis[i] = true;
+        while (!que.isEmpty()) {
+            int u = que.poll();
+            for (int v = 0; v < n; v++) {
+                if (!vis[v] && nums[u][v] == 1) {
+                    vis[v] = true;
+                    que.offer(v);
+                }
+            }
+        }
+    }
+}
+// Time Complexity :- O(n^2).
+// Space Complexity :- O(n).
