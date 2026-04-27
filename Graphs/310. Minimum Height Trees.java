@@ -15,24 +15,22 @@ class Solution {
             int u = edge[0], v = edge[1];
             indegree[u]++;
             indegree[v]++;
-            // computeIfAbsent instead of put().add()
+            // computeIfAbsent making adj list u connected to v.
             adj.computeIfAbsent(u, k -> new ArrayList<>()).add(v);
             adj.computeIfAbsent(v, k -> new ArrayList<>()).add(u);
         }
         Queue<Integer> que = new LinkedList<>();
         // start with all leaf nodes (degree 1)
         for (int i = 0; i < n; i++)
-            if (indegree[i] == 1) que.offer(i);
+            if (indegree[i] == 1) que.offer(i); // adding all leaf nodes so that we can remove them later
         // trim leaves layer by layer until 1 or 2 nodes remain
         while (n > 2) {
             int size = que.size();
-            n -= size;
+            n -= size; // removing nodes with indegree 1
             while (size-- > 0) {
                 int u = que.poll();
-                // adj.get(u) instead of adj[u]
                 for (int v : adj.get(u)) {
                     indegree[v]--;
-                    // indegree typo corrected
                     if (indegree[v] == 1)
                         que.offer(v);
                 }
