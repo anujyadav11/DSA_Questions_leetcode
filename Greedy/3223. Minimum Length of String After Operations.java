@@ -1,8 +1,8 @@
 /*********************************************** JAVA **************************************************/
 
 // Optimal Solution - Finds minimum string length after symmetric deletions by keeping 2 characters for even frequencies and 1 for odd frequencies per character.
-/* "The key insight is that symmetric deletion from both ends reduces each character's count by 2 per operation — so even frequencies reduce to 2 and odd frequencies reduce to 1. 
-    No need to simulate deletions — pure frequency parity gives the answer in O(n). This is a common string reduction pattern worth recognizing immediately." */
+/* "The key insight is that symmetric deletion from both ends reduces each character's count by 2 per operation — so even frequencies reduce to 2, and odd frequencies reduce to 1. 
+    No need to simulate deletions — pure frequency parity answers O(n). This is a common string reduction pattern worth recognising immediately." */
 
 class Solution {
     public int minimumLength(String s) {
@@ -22,5 +22,6 @@ class Solution {
     }
 }
 
-// Time Complexity :- O(n).
-// Space Complexity :- O(26).
+// Time Complexity :- O(n). We are traversing the array only one time.
+// Space Complexity :- O(26). because we are using a frequency count array of size 26.
+ 
