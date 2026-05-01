@@ -25,5 +25,5 @@ class Solution {
     }
 }
 
-// Time Complexity :- O(E + n log n).
+// Time Complexity :- O(E + n log n). e is to find the degree of the nodes.
 // Space Complexity :- O(n).
