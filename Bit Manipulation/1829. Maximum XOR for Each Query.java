@@ -24,5 +24,5 @@ class Solution {
     }
 }
 
-// Time Complexity :- O(n).
-// Space Complexity :- O(n).
+// Time Complexity :- O(n).— one pass to build XOR, one pass to answer queries
+// Space Complexity :- O(n). — result array of size n
