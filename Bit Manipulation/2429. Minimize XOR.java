@@ -20,7 +20,6 @@ class Solution {
         }
         // second pass: fill remaining needed bits from lowest positions
         bit = 0;
-        // FIXED: bit < 32 instead of bit <= 32
         while (bit < 32 && setBits > 0) {
             if ((res & (1 << bit)) == 0) {
                 res |= (1 << bit);
