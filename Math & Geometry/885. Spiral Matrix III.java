@@ -6,7 +6,7 @@
 
 class Solution {
     public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
-        // FIXED: correct spiral direction order — right, down, left, up
+        // correct spiral direction order — right, down, left, up
         int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int n = rows * cols;
         int[][] res = new int[n][2];
