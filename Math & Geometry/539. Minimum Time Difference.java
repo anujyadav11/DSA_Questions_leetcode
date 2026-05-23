@@ -11,7 +11,7 @@ class Solution {
         // convert each time string to total minutes
         for (int i = 0; i < n; i++) {
             String time = timePoints.get(i);
-            // FIXED: directly use string without Integer.toString conversion
+            // directly use string without Integer.toString conversion
             int hour = Integer.parseInt(time.substring(0, 2));
             int min = Integer.parseInt(time.substring(3));
             mins[i] = hour * 60 + min;
