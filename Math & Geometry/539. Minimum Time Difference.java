@@ -16,7 +16,6 @@ class Solution {
             int min = Integer.parseInt(time.substring(3));
             mins[i] = hour * 60 + min;
         }
-        // FIXED: Arrays.sort not Array.sort
         Arrays.sort(mins);
         int res = Integer.MAX_VALUE;
         // check difference between consecutive sorted times
