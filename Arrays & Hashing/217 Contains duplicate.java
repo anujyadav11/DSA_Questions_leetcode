@@ -1,6 +1,6 @@
 /********************************* JAVA ***************************************/
 
-Better Approach 
+// Better Approach 
 class Solution {
     public boolean containsDuplicate(int[] nums) {
         int n = nums.length; // Get the length of the array
@@ -18,12 +18,32 @@ class Solution {
         return false;
     }
 }
-Time Complexity - O(n).
-Space Complexity - O(n).
+//Time Complexity - O(n).
+//Space Complexity - O(n).
+
+// Optimal Approach : Using HashMap.
+    
+    class Solution {
+    public boolean containsDuplicate(int[] nums) {
+        // Stores all unique numbers encountered so far
+        HashSet<Integer> set = new HashSet<>();
+        // Iterate through each number in the array
+        for (int num : nums) {
+            // If the number is already present,
+            // we found a duplicate
+            if (set.contains(num)) {
+                return true;
+            }
+            // Add the current number to the set
+            set.add(num);
+        }
+        // No duplicates found
+        return false;
+    }
+}
 
 
-
-Brute Force Approach
+// Brute Force Approach
 class Solution {
     public boolean containsDuplicate(int[] nums) {
         // Step 1: Sort the array
@@ -41,5 +61,5 @@ class Solution {
         return false;
     }
 }
-Time Complexity - O(n log n).
-Space Complexity - O(1).
+// Time Complexity - O(n log n).
+// Space Complexity - O(1).
