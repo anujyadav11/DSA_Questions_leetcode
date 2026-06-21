@@ -1,6 +1,6 @@
 /******************************************************* JAVA ***************************************************/
 
-Better Approach - using HashMap and Aorted String 
+// Better Approach - using HashMap and Sorted String
 
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
@@ -24,33 +24,27 @@ class Solution {
         return new ArrayList<>(map.values());
     }
 }
-Time Complexity :- O(N k log k)
-Space Complexity :- O(N)
+// Time Complexity :- O(N k log k)
+// Space Complexity :- O(N)
 
-Brute Force Approach - using HashMap and StringBuilder with a count Array.
+// Brute Force Approach - using HashMap and StringBuilder with a count Array.
 
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-
         // Step 1: HashMap to store grouped anagrams
         // Key   -> frequency-based string representation
         // Value -> list of anagrams having same frequency pattern
         Map<String, List<String>> lookUp = new HashMap<>();
-
         // Step 2: Array to count frequency of each character (a-z)
         int[] count = new int[26];
-
         // Step 3: Iterate through each string in input
         for (String str : strs) {
-
             // Reset frequency array for current string
             Arrays.fill(count, 0);
-
             // Step 4: Count frequency of each character in the string
             for (char c : str.toCharArray()) {
                 count[c - 'a']++;
             }
-
             // Step 5: Build a unique key from character frequencies
             // Example: "#1#0#0#2..."
             StringBuilder sb = new StringBuilder();
@@ -59,21 +53,18 @@ class Solution {
                 sb.append(count[i]);
             }
             String key = sb.toString();
-
             // Step 6: If key not present, create a new list
             if (!lookUp.containsKey(key)) {
                 lookUp.put(key, new ArrayList<>());
             }
-
             // Step 7: Add the string to its anagram group
             lookUp.get(key).add(str);
         }
-
         // Step 8: Return all grouped anagrams
         return new ArrayList<>(lookUp.values());
 
     }
 }
 
-        Time Complexity :- O(n * k)
-        Space Complexity :- O(n * k)
+// Time Complexity :- O(n * k)
+// Space Complexity :- O(n * k)
