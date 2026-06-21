@@ -1,6 +1,6 @@
 /************************************************** JAVA **************************************************/
 
-Better Approach
+// Better Approach
 
 class Solution {
     public boolean isAnagram(String s, String t) {
@@ -23,11 +23,10 @@ class Solution {
         return true;
     }
 }
-Time Complexity :- O(N + M).
-Space Complexity :- O(1).
+// Time Complexity :- O(N + M).
+// Space Complexity :- O(1).
 
-
-Brute Force Approach
+// Brute Force Approach
 
  class Solution {
     public boolean isAnagram(String s, String t) {
@@ -45,6 +44,7 @@ Brute Force Approach
         return Arrays.equals(sChars, tChars);
     }
 }
-Time Complexity :- O(n log n).
-Space Complexity :- O(N + M).
+
+// Time Complexity :- O(n log n).
+// Space Complexity :- O(N + M).
 
