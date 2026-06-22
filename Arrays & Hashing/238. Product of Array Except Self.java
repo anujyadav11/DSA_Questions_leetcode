@@ -1,6 +1,6 @@
 /********************************************** JAVA ***********************************************/
 
-Optimal Approach - using two pointer and res array for calcluating product of the array except itself
+// Optimal Approach - using two pointers and a res array for calculating the product of the array except itself
 
 class Solution {
     public int[] productExceptSelf(int[] nums) {
@@ -27,5 +27,34 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N)
-Space Complexity:- O(1)
+// Time Complexity :- O(N)
+// Space Complexity:- O(1)
+
+// Simpler Approach with extra space 
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        // left[i] = product of all elements before index i
+        int[] left = new int[n];
+        left[0] = 1;
+        for (int i = 1; i < n; i++) {
+            left[i] = left[i - 1] * nums[i - 1];
+        }
+        // right[i] = product of all elements after index i
+        int[] right = new int[n];
+        right[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            right[i] = right[i + 1] * nums[i + 1];
+        }
+        // Result array
+        int[] result = new int[n];
+        // Product except self = left product × right product
+        for (int i = 0; i < n; i++) {
+            result[i] = left[i] * right[i];
+        }
+        return result;
+    }
+}
+
+// Time Complexity :- O(N)
+// Space Complexity:- O(N)
