@@ -1,6 +1,6 @@
 /************************************************* JAVA ******************************************/
 
-Optimal Approach - using HashMap as frequency and using bucket sort for finding top k frequent element 
+//Optimal Approach - using HashMap as frequency and using bucket sort for finding top k frequent element 
 
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
@@ -35,43 +35,38 @@ class Solution {
     }
 }
 
-Time Complexity :- O(n)
-Space Complexity :- O(n)
+// Time Complexity :- O(n)
+// Space Complexity :- O(n)
 
-Brute force Solution - using HashMap as frequency and min-heap to store the k most frequent elements
+// Better Solution - using HashMap as frequency and min-heap to store the k most frequent elements
 
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
-        // HashMap to store frequency of each number
-        // SC: O(n) in worst case (all elements unique)
-        HashMap<Integer, Integer> map = new HashMap<>();
-        // Count frequency of each element
+        // Stores the final k most frequent elements
+        int[] result = new int[k];
+        // Frequency map: number -> occurrence count
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        // Count frequencies
         for (int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            frequencyMap.put(num,
+                    frequencyMap.getOrDefault(num, 0) + 1);
         }
-        // Min-Heap (PriorityQueue) of size k
-        // Heap stores the k most frequent elements
-        // Comparator compares elements by frequency
-        PriorityQueue<Integer> pq = new PriorityQueue<>(
-            (a, b) -> map.get(a) - map.get(b)
-        );
-        // Iterate over unique elements in the map
-        for (int num : map.keySet()) {
-            pq.add(num);          // O(log k)
-            if (pq.size() > k) {
-                pq.poll();        // O(log k)
-            }
+        // Max Heap ordered by frequency
+        PriorityQueue<Map.Entry<Integer, Integer>> maxHeap =
+                new PriorityQueue<>(
+                        (a, b) -> b.getValue() - a.getValue()
+                );
+        // Add all entries to the heap
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+            maxHeap.offer(entry);
         }
-        // Result array of size k
-        int[] arr = new int[k];
-        int i = 0;
-        // Extract elements from heap
-        while (!pq.isEmpty()) {
-            arr[i++] = pq.poll();
+        // Extract k most frequent elements
+        for (int i = 0; i < k; i++) {
+            result[i] = maxHeap.poll().getKey();
         }
-        return arr;
+        return result;
     }
 }
 
-Time Complexity :- O(n log k)
-Space Complexity :- O(n)
+// Time Complexity :- O(n log k)
+// Space Complexity :- O(n)
