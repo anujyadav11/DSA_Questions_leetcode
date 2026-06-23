@@ -1,6 +1,7 @@
 /************************************************ JAVA ************************************************/
 
-Optimal soultion - we are using set for unique values because a sudoku also have unique values in row and col.
+// Optimal soultion - Use a HashSet to track digit occurrences in rows, columns, and 3×3 boxes and detect duplicates efficiently.
+/* “For every digit, I generate three unique identifiers representing its row, column, and box occurrence. If any identifier already exists in the HashSet, the Sudoku board is invalid.” */
 
 class Solution {
     public boolean isValidSudoku(char[][] board) {
@@ -30,5 +31,5 @@ class Solution {
         return true;
     }
 }
-Time Complexity - O(1).
-Space Complexity - O(1).
+// Time Complexity - O(9 * 9).
+// Space Complexity - O(1).
