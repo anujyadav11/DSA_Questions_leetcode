@@ -1,7 +1,7 @@
  /******************************************** JAVA *******************************************/
 
-Brute Force - using StringBuilder to modify the string with no space, no digit, no uppercase letter, then compare it with "equals"
-              Builtin a function to get the desired result.
+// Better Force - using StringBuilder to modify the string with no space, no digit, no uppercase letter, then compare it with "equals" Builtin a function to get the desired result.
+
 class Solution {
     public boolean isPalindrome(String s) {
         // StringBuilder to store only lowercase alphanumeric characters
@@ -20,11 +20,10 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(1).
+// Time Complexity :- O(N).
+// Space Complexity :- O(N).
 
-Optimal solution - using two pointer technique with skipping letter and digit, and convert string to all lowercase, then just shrink the 
-                    to centre and return true if its palindrome.
+// Optimal solution - using two-pointer technique with skipping letter and digit, and convert string to all lowercase, then just shrink to the centre and return true if its palindrome.
 
 class Solution {
     public boolean isPalindrome(String s) {
@@ -36,7 +35,7 @@ class Solution {
         // 'end' begins from the end of the string
         int start = 0;
         int end = s.length() - 1;
-        // Continue checking characters while start pointer is before end pointer
+        // Continue checking characters while start pointer is before the end pointer
         while (start < end) {
             // Character at the start pointer
             char cur = s.charAt(start);
@@ -65,5 +64,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(1).
+// Time Complexity :- O(N).
+// Space Complexity :- O(1).
