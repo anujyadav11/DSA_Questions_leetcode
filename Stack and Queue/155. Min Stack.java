@@ -1,6 +1,6 @@
 /*********************************************** JAVA *******************************************/
 
-Optimal Approach - we are using two stacks in this problem, one stack for storing all the values and one stack for storing only the minimum values, and we return minstack top at the last for getting
+// Optimal Approach - we are using two stacks in this problem, one stack for storing all the values and one stack for storing only the minimum values, and we return minstack top at the last for getting
                     the minimum value from the getMin() function.
 
 class MinStack {
@@ -43,5 +43,5 @@ class MinStack {
         return minSt.peek();
     }
 }
-Time Complexity :- O(1).
-Space Complexity :- O(N).
+// Time Complexity :- O(1).
+// Space Complexity :- O(N).
