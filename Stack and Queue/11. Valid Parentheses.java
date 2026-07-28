@@ -1,6 +1,6 @@
 /************************************************ JAVA *************************************/
 
-Optimal Approach - we are using a stack to solve this problem. Basically, we use a stack as an open and closed parentheses verifier. 
+// Optimal Approach - we are using a stack to solve this problem. Basically, we use a stack as an open and closed parentheses verifier. 
 
 class Solution {
     public boolean isValid(String s) {
@@ -30,5 +30,5 @@ class Solution {
         return st.isEmpty();
     }
 }
-Time Complexity :- O(N)
-Space Complexity :- O(N)
+// Time Complexity :- O(N)
+// Space Complexity :- O(N)
