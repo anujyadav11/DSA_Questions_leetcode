@@ -1,8 +1,8 @@
 /******************************************** JAVA ***************************************/
 
-Optimal Solution –  Using a stack and a result array, we store the indices of future days with higher temperatures, and for 
-                    each day calculate and store the number of days to wait until a warmer temperature is found, then return 
-                    the result array.
+// Optimal Solution –  Using a stack and a result array, we store the indices of future days with higher temperatures, and for 
+                    //each day calculate and store the number of days to wait until a warmer temperature is found, then return 
+                    //the result array.
 
 class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
@@ -31,5 +31,5 @@ class Solution {
         return res;
     }
 }
-Time Complexity :- O(N).
-Space Complexity :- O(N)
+// Time Complexity :- O(N).
+//Space Complexity :- O(N)
