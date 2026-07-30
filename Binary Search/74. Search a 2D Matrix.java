@@ -1,7 +1,7 @@
 /*********************************************** JAVA *************************************************/
 
-Optimal solution - Treat the 2D matrix as a single sorted 1D array and apply binary search by mapping mid index to row (mid / m) and 
-                    column (mid % m) to find the target in O(log(n·m)) time and O(1) space.
+//Optimal solution - Treat the 2D matrix as a single sorted 1D array and apply binary search by mapping mid index to row (mid / m) and 
+                    //column (mid % m) to find the target in O(log(n·m)) time and O(1) space.
 
 
 class Solution {
@@ -34,5 +34,5 @@ class Solution {
         return false;
     }
 }
-Time Complexity :- O(log N * M).
-Space Complexity :- O(1).
+// Time Complexity :- O(log N * M).
+// Space Complexity :- O(1).
