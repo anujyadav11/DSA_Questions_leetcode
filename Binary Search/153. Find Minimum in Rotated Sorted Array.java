@@ -1,11 +1,11 @@
 /**************************************************** JAVA *************************************************/
 
 
-Brute Force - We linearly traverse the array while keeping track of the smallest element found so far and return it as the minimum value.
+// Brute Force - We linearly traverse the array while keeping track of the smallest element found so far and return it as the minimum value.
 
 class Solution {
     public int findMin(int[] nums) {
-        // Initialize minimum with the first element
+        //Initialise minimum with the first element
         int min = nums[0];
         // Traverse the array to find the smallest element
         for (int num : nums) {
@@ -15,12 +15,10 @@ class Solution {
         return min;
     }
 }
-Time Complexity :- O(N).
-Space Complexity :- O(1).
+// Time Complexity :- O(N).
+// Space Complexity :- O(1).
 
-Optimal Soultion - We apply binary search on the rotated sorted array by comparing the middle element with the rightmost element to decide 
-                    which half contains the minimum and narrows the search until the minimum is found.
-
+// Optimal Solution - We apply binary search on the rotated sorted array by comparing the middle element with the rightmost element to decide which half contains the minimum and narrows the search until the minimum is found.
 
 class Solution {
     public int findMin(int[] nums) {
@@ -46,6 +44,6 @@ class Solution {
         return nums[left];
     }
 }
-Time Complexity :- O(log N).
-Space Complexity :- O(1).
+// Time Complexity :- O(log N).
+// Space Complexity :- O(1).
 
