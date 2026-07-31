@@ -1,7 +1,7 @@
 /***************************************************** JAVA ************************************************/
 
-Optimal solution -  We perform binary search on the rotated sorted array by identifying the sorted half at each step and deciding whether the target lies within 
-                    that range to safely discard the other half.
+//Optimal solution -  We perform binary search on the rotated sorted array by identifying the sorted half at each step and deciding whether the target lies within 
+                    //that range to safely discard the other half.
 
 class Solution {
     // Function to search for an element in a rotated sorted array
@@ -40,5 +40,5 @@ class Solution {
         return -1;
     }
 }
-Time Complexity :- O(log n).
-Space Complexity :- O(1).
+// Time Complexity :- O(log n).
+// Space Complexity :- O(1).
