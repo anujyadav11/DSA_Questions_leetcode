@@ -1,7 +1,7 @@
 /******************************************************** JAVA *********************************************/
 
-Optimal Solution - We use a sliding window with a set to maintain unique characters, expanding the window with the right pointer and 
-                    shrinking it from the left whenever a duplicate appears to track the longest valid substring.
+// Optimal Solution - We use a sliding window with a set to maintain unique characters, expanding the window with the right pointer and 
+                    // shrinking it from the left whenever a duplicate appears to track the longest valid substring.
 
 
 
@@ -30,5 +30,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(n).
-Space Complexity :- O(n).
+// Time Complexity :- O(n).
+// Space Complexity :- O(1).
