@@ -1,7 +1,7 @@
 /*********************************************** JAVA **********************************************/
 
-Optimal Solution - We slide a fixed-size window over s2 while maintaining character frequencies and check if any window matches 
-                    the frequency pattern of s1, indicating a permutation.
+// Optimal Solution - We slide a fixed-size window over s2 while maintaining character frequencies and check if any window matches 
+                    // the frequency pattern of s1, indicating a permutation.
 
 
 class Solution {
@@ -38,5 +38,5 @@ class Solution {
         return false;
     }
 }
-Time Complexity :- O(m + n).
-Space Complexity :- O(1).
+// Time Complexity :- O(m + n).
+// Space Complexity :- O(1).
