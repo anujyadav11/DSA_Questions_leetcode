@@ -1,6 +1,6 @@
 /****************************************************** JAVA ***************************************************/ 
 
-Brute Force Solution -  We reverse the linked list by pushing all node values onto a stack and rebuilding the list by popping values in reverse order.
+// Brute Force Solution -  We reverse the linked list by pushing all node values onto a stack and rebuilding the list by popping values in reverse order.
 
 
 class Solution {
@@ -25,11 +25,11 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N)
-Space Complexity :- O(N)
+// Time Complexity :- O(N)
+// Space Complexity :- O(N)
 
 
-Optimal Solution - We reverse the linked list in-place by iteratively redirecting each node’s next pointer to its previous node while traversing the list.
+// Optimal Solution - We reverse the linked list in-place by iteratively redirecting each node’s next pointer to its previous node while traversing the list.
 
 class Solution {
     public ListNode reverseList(ListNode head) {
@@ -54,5 +54,6 @@ class Solution {
         return preNode;
     }
 }
-Time Complexity :- O(N)
-Space Complexity :- O(1)
+
+// Time Complexity :- O(N)
+// Space Complexity :- O(1)
