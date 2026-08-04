@@ -1,7 +1,6 @@
 /************************************************** JAVA ******************************************************/
 
-Optimal solution - We use two pointers moving at different speeds, and if a cycle exists, the fast pointer will eventually meet the slow pointer.
-
+// Optimal solution - We use two pointers moving at different speeds, and if a cycle exists, the fast pointer will eventually meet the slow pointer.
 
 class Solution {
     public boolean hasCycle(ListNode head) {
@@ -24,5 +23,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(1).
+// Time Complexity :- O(N).
+// Space Complexity :- O(1).
