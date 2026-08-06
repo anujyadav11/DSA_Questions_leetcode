@@ -1,19 +1,18 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - We treat the array as a linked list where each value points to the next index, use Floyd’s cycle detection 
-                    to find the cycle, and the entry point of that cycle corresponds to the duplicate number.
+// Optimal Solution - We treat the array as a linked list where each value points to the next index, use Floyd’s cycle detection to find the cycle, and the entry point of that cycle corresponds to the duplicate number.
 
 class Solution {
     public int findDuplicate(int[] nums) {
+        // Step 1: Detect the meeting point inside the cycle
         int slow = 0;
         int fast = 0;
-        // Phase 1: Detect cycle
-        // Move slow by 1 step and fast by 2 steps
         do {
             slow = nums[slow];
             fast = nums[nums[fast]];
         } while (slow != fast);
-        // Phase 2: Find entry point of the cycle (duplicate number)
+        // Step 2: Move one pointer to the start
+        // Both pointers now move one step at a time
         slow = 0;
         while (slow != fast) {
             slow = nums[slow];
@@ -24,5 +23,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(1).
+// Time Complexity :- O(N).
+// Space Complexity :- O(1).
