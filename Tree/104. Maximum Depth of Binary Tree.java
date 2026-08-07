@@ -1,6 +1,6 @@
 /************************************************* JAVA ********************************************/
 
-Recursive Solution - We compute the height of the left and right subtrees recursively and return one plus the larger height to represent the maximum depth from the root to a leaf.
+// Recursive Solution - We compute the height of the left and right subtrees recursively and return one plus the larger height to represent the maximum depth from the root to a leaf.
 
 class Solution {
     // Function to calculate the maximum depth of a binary tree
@@ -16,10 +16,10 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(H).
+// Time Complexity :- O(N).
+// Space Complexity :- O(H).
 
-Iterative Solution - We perform a level-order traversal using a queue and increment the depth counter after processing each level, resulting in the total number of levels in the tree.
+// Iterative Solution - We perform a level-order traversal using a queue and increment the depth counter after processing each level, resulting in the total number of levels in the tree.
 
 class Solution {
     public int maxDepth(TreeNode root) {
@@ -50,5 +50,5 @@ class Solution {
         return levels;
     }
 }
-Time Complexity :- O(N).
-Space Complexity :- O(N).
+// Time Complexity :- O(N).
+// Space Complexity :- O(N).
