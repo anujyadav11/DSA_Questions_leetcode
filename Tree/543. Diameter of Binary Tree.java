@@ -1,7 +1,6 @@
 /********************************************************** JAVA ************************************************/
 
-Recursive Solution - The diameter is computed by finding, for each node, the sum of heights of its left and right subtrees 
-                      while tracking the maximum such value during a single DFS traversal.
+// Recursive Solution - The diameter is computed by finding, for each node, the sum of heights of its left and right subtrees while tracking the maximum such value during a single DFS traversal.
 
 class Solution {
     // Function to find the diameter of a Binary Tree.
@@ -26,12 +25,11 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N)
-Space Complexity :- O(H) height of the tree
+// Time Complexity :- O(N)
+// Space Complexity :- O(H) height of the tree
 
 
-Iterative Solution - We simulate postorder traversal using a stack and store subtree heights in a map, updating the diameter as 
-                      the sum of left and right subtree heights at each node.
+// Iterative Solution - We simulate postorder traversal using a stack and store subtree heights in a map, updating the diameter as the sum of left and right subtree heights at each node.
 
 class Solution {
     public int diameterOfBinaryTree(TreeNode root) {
@@ -72,5 +70,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Compelxity :- O(N).
+// Time Complexity :- O(N).
+// Space Compelxity :- O(N).
