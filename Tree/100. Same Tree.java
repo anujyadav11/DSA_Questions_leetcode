@@ -1,30 +1,30 @@
 /*********************************************** JAVA **************************************************/
 
-Recursive Solution - Two trees are the same if their roots have equal values and their left and right subtrees are recursively identical.
+// Recursive Solution - Recursively compare corresponding nodes, values, and subtree structures to determine whether two binary trees are identical.
 
 class Solution {
-    // Checks whether two binary trees are structurally identical
-    // and have the same node values
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        // If both nodes are null, trees match at this branch
-        if (p == null && q == null)
+        // If both nodes are null, they are identical at this position
+        if (p == null && q == null) {
             return true;
-        // If one is null and the other is not, trees differ
-        if (p == null || q == null)
+        }
+        // If only one node is null, the structures are different
+        if (p == null || q == null) {
             return false;
-        // If values differ, trees are not the same
-        if (p.val != q.val)
-            return false;
-        // Recursively compare left and right subtrees
-        return isSameTree(p.left, q.left) &&
-               isSameTree(p.right, q.right);
+        }
+        // Current values must match
+        // AND left subtrees must match
+        // AND right subtrees must match
+        return (p.val == q.val)
+                && isSameTree(p.left, q.left)
+                && isSameTree(p.right, q.right);
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(H).
+// Time Complexity :- O(N).
+// Space Complexity :- O(H).
 
-Iterative Solution - Compare two binary trees level-by-level using BFS to ensure identical structure and node values.
+//Iterative Solution - Compare two binary trees level-by-level using BFS to ensure identical structure and node values.
 
 class Solution {
     public boolean isSameTree(TreeNode a, TreeNode b) {
@@ -50,5 +50,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(N).
+// Time Complexity :- O(N).
+// Space Complexity :- O(N).
