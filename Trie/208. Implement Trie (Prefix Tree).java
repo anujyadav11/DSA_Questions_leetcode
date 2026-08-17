@@ -1,26 +1,25 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - Trie implementation supporting efficient insert, search, and prefix lookup in O(L) time.
-                   Trie converts string operations from O(N × L) to O(L) by storing shared prefixes efficiently.
+// Optimal Solution - Trie implementation supporting efficient insert, search, and prefix lookup in O(L) time. Trie converts string operations from O(N × L) to O(L) by storing shared prefixes efficiently.
 
 class TrieNode {
-    // Assuming lowercase English letters
     TrieNode[] children;
     boolean isEnd;
     public TrieNode() {
+        // 26 children for lowercase English letters
         children = new TrieNode[26];
         isEnd = false;
     }
 }
 class Trie {
-    private TrieNode root;
+    TrieNode root;
     public Trie() {
-        // Initialize the Trie with an empty root node.
+        // Root represents the empty prefix
         root = new TrieNode();
     }
-    // Insert a word into the Trie.
     public void insert(String word) {
         TrieNode node = root;
+        // Create/traverse nodes for each character
         for (char ch : word.toCharArray()) {
             int index = ch - 'a';
             if (node.children[index] == null) {
@@ -28,33 +27,35 @@ class Trie {
             }
             node = node.children[index];
         }
-        node.isEnd = true; // Mark the end of the word.
+        // Mark the end of the word
+        node.isEnd = true;
     }
-    // Search for a word in the Trie.
     public boolean search(String word) {
         TrieNode node = root;
+        // Traverse the Trie for each character
         for (char ch : word.toCharArray()) {
             int index = ch - 'a';
             if (node.children[index] == null) {
-                return false; // The prefix doesn't exist in the Trie.
+                return false;
             }
             node = node.children[index];
         }
-        return node.isEnd; // Check if the word ends at this node.
+        // True only if a complete word ends here
+        return node.isEnd;
     }
-    // Check if there is any word in the Trie that starts with the given prefix.
     public boolean startsWith(String prefix) {
         TrieNode node = root;
+        // Check whether the prefix path exists
         for (char ch : prefix.toCharArray()) {
             int index = ch - 'a';
             if (node.children[index] == null) {
-                return false; // The prefix doesn't exist in the Trie.
+                return false;
             }
             node = node.children[index];
         }
-        return true; // The Trie contains words with the given prefix.
+        return true;
     }
 }
 
-Time Complexity :- O(N).
-Space Complexity :- O(N * L).
+// Time Complexity :- O(N).
+// Space Complexity :- O(N * L).
