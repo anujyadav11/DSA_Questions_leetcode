@@ -1,6 +1,6 @@
 /**************************************************** JAVA *******************************************/
 
-// Better Approach - using HashMap to store numbers and their index, then findthe  target to get the value from the map and their index
+// Better Approach - using HashMap to store numbers and their indices, then find the target complement in the map.
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
