@@ -1,7 +1,8 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - Use dynamic programming to compute the longest increasing subsequence ending at each index.
-                    For each index, I compute the LIS ending there by extending all valid previous subsequences.
+// Optimal Solution - Use dynamic programming to compute the longest increasing subsequence ending at each index. For each index, I compute the LIS ending there by extending all valid previous subsequences.
+/* “I define dp[i] as the length of the longest increasing subsequence ending at index i. For every element, I check all previous elements. If the current element is greater, 
+    I can extend the subsequence ending at that previous element, so I update dp[i] with dp[j] + 1. Finally, the answer is the maximum value in the DP array.” */
 
 class Solution {
     public int lengthOfLIS(int[] nums) {
@@ -30,5 +31,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(n^2).
-Space Complexity :- O(n).
+// Time Complexity :- O(n^2).
+// Space Complexity :- O(n).
