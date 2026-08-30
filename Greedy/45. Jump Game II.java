@@ -1,7 +1,8 @@
 /*********************************************** JAVA **************************************************/
 
 //Optimal Solution - Greedy approach that minimizes jumps by expanding the farthest reachable range and jumping only when necessary.I treat each jump as a range and greedily expand the farthest reachable index before committing to the next jump.
-/*  */
+/* “I treat each jump like a BFS level. lastJumpIdx represents the end of the current reachable range, while coverage tracks the farthest position reachable from that range. 
+    When I reach lastJumpIdx, I must make another jump, so I move the boundary to coverage. Once the coverage reaches the destination, I return the number of jumps.” */
 
 class Solution {
     public int jump(int[] nums) {
