@@ -1,7 +1,8 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - Greedy approach using a TreeMap to repeatedly form consecutive groups starting from the smallest card.
-                   Starting from the smallest card is optimal because skipping it would prevent forming a valid consecutive sequence later.
+//Optimal Solution - Greedy approach using a TreeMap to repeatedly form consecutive groups starting from the smallest card. Starting from the smallest card is optimal because skipping it would prevent forming a valid consecutive sequence later.
+/* “I count the frequency of every card and store them in a sorted map. The smallest remaining card must be the start of the next group, because there is no smaller card available to place before it. 
+    I therefore greedily consume groupSize consecutive cards starting from the smallest card. If any required card is missing, forming the groups is impossible.” */
 
 class Solution {
     public boolean isNStraightHand(int[] hand, int groupSize) {
@@ -38,5 +39,6 @@ class Solution {
     }
 }
 
-Time Complexity :- O(n lgo n).
-Space Complexity :- O(n).
+
+// Time Complexity :- O(n lgo n).
+// Space Complexity :- O(n).
