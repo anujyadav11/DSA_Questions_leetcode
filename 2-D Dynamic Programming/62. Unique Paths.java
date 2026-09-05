@@ -1,7 +1,8 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - Dynamic programming solution that counts unique paths by accumulating ways from top and left cells.
-                   Each cell’s paths depend only on the cell above and to the left, making it a classic 2D DP grid problem.
+// Optimal Solution - Dynamic programming solution that counts unique paths by accumulating ways from top and left cells. Each cell’s paths depend only on the cell above and to the left, making it a classic 2D DP grid problem.
+/* “I use dynamic programming where grid[i][j] represents the number of ways to reach that cell. Since movement is only right or down, 
+    every cell can be reached from either the cell above or the cell to the left, so I add those two values. The first row and column are initialized to one because they have only one possible path.” */
 
 class Solution {
     public int uniquePaths(int m, int n) {
@@ -25,5 +26,5 @@ class Solution {
     }
 }
 
-Time Complexity :- O(m x n).
-Space Complexity :- O(m x n).
+// Time Complexity :- O(m x n).
+// Space Complexity :- O(m x n).
