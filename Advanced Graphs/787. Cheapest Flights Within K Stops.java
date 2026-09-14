@@ -1,7 +1,6 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - BFS-based solution with cost relaxation to find the cheapest flight within at most k stops.
-                   Use BFS up to k levels and relax edges like Bellman-Ford, ensuring we only consider paths with valid stop counts.
+//Optimal Solution - BFS-based solution with cost relaxation to find the cheapest flight within at most k stops. Use BFS up to k levels and relax edges like Bellman-Ford, ensuring we only consider paths with valid stop counts.
 
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
@@ -51,6 +50,47 @@ class Solution {
         return distance[dst] == Integer.MAX_VALUE ? -1 : distance[dst];
     }
 }
+// Time Complexity :- O(K * E).
+// Space Complexity :- O(V + E).
 
-Time Complexity :- O(K * E).
-Space Complexity :- O(V + E).
+//Optimal Solution - Uses Bellman-Ford-style DP to find the cheapest route within at most K + 1 flights in O(K·E) time and O(V) space.
+
+class Solution {
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
+        // price[i] = minimum cost to reach node i
+        // using flights from previous iterations
+        int price[] = new int[n];
+        Arrays.fill(price, Integer.MAX_VALUE);
+        // Cost to reach source is 0
+        price[src] = 0;
+        // We can take at most k + 1 flights
+        // because k stops means k + 1 edges/flights.
+        for (int i = 0; i < k + 1; i++) {
+            // Copy previous state.
+            // This prevents using more than one new flight
+            // during the current iteration.
+            int[] temp = Arrays.copyOf(price, n);
+            // Try relaxing every flight
+            for (int[] flight : flights) {
+                int u = flight[0];
+                int v = flight[1];
+                int w = flight[2];
+                // If u is reachable and going through this flight
+                // gives a cheaper price for v, update it.
+                if (price[u] != Integer.MAX_VALUE &&
+                    price[u] + w < temp[v]) {
+                    temp[v] = price[u] + w;
+                }
+            }
+            // Move to the next iteration
+            price = temp;
+        }
+        // Destination unreachable
+        return (price[dst] == Integer.MAX_VALUE)
+                ? -1
+                : price[dst];
+    }
+}
+
+// Time Complexity :- O(K * E).
+// Space Complexity :- O(V).
