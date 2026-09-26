@@ -1,58 +1,76 @@
 /*********************************************** JAVA **************************************************/
 
-Optimal Solution - Binary search on time combined with DFS reachability to find the earliest moment a path exists.
-                   The earliest time must satisfy a monotonic reachability condition, making binary search + DFS an optimal solution.
+// Optimal Solution - Binary search on time combined with DFS reachability to find the earliest moment a path exists.The earliest time must satisfy a monotonic reachability condition, making binary search + DFS an optimal solution.
+/* “I binary search on the minimum water level. For each candidate level, I run DFS from the top-left and only visit cells whose elevation is less than or equal to that level. 
+    If the destination is reachable, the candidate is feasible, so I search for a smaller level. Otherwise, I increase the level. The feasibility condition is monotonic, which allows binary search.”*/
 
 class Solution {
-    int[][] dirs = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    // Four possible movement directions:
+    // down, up, right, left
+    int dirs[][] = {{ 1, 0 },{ -1, 0 },{ 0, 1 },{ 0, -1 }};
+    // Grid size
     int n;
-    public boolean possibleToReach(int[][] grid, int i, int j, int t, boolean[][] vis) {
-        // Boundary, visited, and height check
-        if (i < 0 || j < 0 || i >= n || j >= n || vis[i][j] || grid[i][j] > t) {
+    public boolean possible(int[][] grid, int i, int j, int t, boolean[][] vis) {
+        // Invalid cell if:
+        // 1. Outside the grid
+        // 2. Already visited
+        // 3. Cell elevation is greater than the current water level
+        if (i < 0 || i >= n ||
+            j < 0 || j >= n ||
+            vis[i][j] == true ||
+            grid[i][j] > t) {
             return false;
-        }
-        // Reached destination
-        if (i == n - 1 && j == n - 1) {
-            return true;
         }
         // Mark current cell as visited
         vis[i][j] = true;
-        // Explore all 4 directions
+        // Reached the bottom-right cell
+        if (i == n - 1 && j == n - 1)
+            return true;
+        // Explore all four neighboring cells
         for (int[] dir : dirs) {
             int newi = i + dir[0];
             int newj = j + dir[1];
-            if (possibleToReach(grid, newi, newj, t, vis)) {
+            // If any neighbor can reach the destination,
+            // a valid path exists.
+            if (possible(grid, newi, newj, t, vis)) {
                 return true;
             }
         }
+        // No valid path from this cell
         return false;
     }
     public int swimInWater(int[][] grid) {
         n = grid.length;
-        // Binary search range
+        // Minimum possible time must be at least
+        // the elevation of the starting cell.
         int l = grid[0][0];
+        // Since the grid contains values from 0 to n² - 1,
+        // this is the maximum possible elevation.
         int r = n * n - 1;
         int res = 0;
-        // Binary search on time
+        // Binary search for the minimum possible water level.
         while (l <= r) {
             int mid = l + (r - l) / 2;
+            // Fresh visited array for each possible water level
             boolean[][] vis = new boolean[n][n];
-            // Check if reachable at time = mid
-            if (possibleToReach(grid, 0, 0, mid, vis)) {
+            // Check whether we can reach the destination
+            // when the water level is 'mid'.
+            if (possible(grid, 0, 0, mid, vis)) {
+                // mid is feasible, so try a smaller value.
                 res = mid;
                 r = mid - 1;
             } else {
+                // mid is not enough, so increase the water level.
                 l = mid + 1;
             }
         }
         return res;
     }
 }
+// Time Complexity :- O(N^2 log N).
+// Space Complexity :- O(N^2).
 
-Time Complexity :- O(N^2 log N).
-Space Complexity :- O(N^2).
-
-Dijkstra Alogrithm Solution
+// Dijkstra Alogrithm Solution
 
 class Solution {
     // Directions to move: down, up, right, left
@@ -101,6 +119,7 @@ class Solution {
         return -1;
     }
 }
-Time Complexity :- O(N^2 log N).
-Space Complexity :- O(N^2).
+
+// Time Complexity :- O(N^2 log N).
+// Space Complexity :- O(N^2).
 
