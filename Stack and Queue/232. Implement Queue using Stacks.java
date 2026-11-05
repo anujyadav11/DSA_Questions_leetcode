@@ -4,40 +4,37 @@
 /* "I use two stacks: one for input and one for output. Elements are pushed onto the input stack. When we need to access the queue front, 
     we transfer elements to the output stack, reversing the order and allowing FIFO behavior." */
 
+
 class MyQueue {
-    // Stack used to push incoming elements
     private final Stack<Integer> input;
-    // Stack used to serve elements in queue order
     private final Stack<Integer> output;
     public MyQueue() {
-        // Initialize both stacks
         input = new Stack<>();
         output = new Stack<>();
     }
+    // Insert element into the queue.
     public void push(int x) {
-        // Always push new elements to the input stack
         input.push(x);
     }
+    // Remove and return the front element.
     public int pop() {
-        // Ensure output stack has the correct front element
-        peek();
-        // Pop from output stack (which represents queue front)
+        peek(); // Ensure the front element is available in output.
         return output.pop();
     }
+    // Return the front element without removing it.
     public int peek() {
-        // If output stack is empty, transfer all elements
-        // from input to output to reverse the order
-        if (output.isEmpty()) {
-            while (!input.isEmpty()) {
+        // Transfer elements only when output is empty.
+        if (output.empty()) {
+            // Reverse the order of elements.
+            while (!input.empty()) {
                 output.push(input.pop());
             }
         }
-        // Top of output stack is the front of the queue
         return output.peek();
     }
+    // Check whether the queue is empty.
     public boolean empty() {
-        // Queue is empty only if both stacks are empty
-        return input.isEmpty() && output.isEmpty();
+        return input.empty() && output.empty();
     }
 }
 
