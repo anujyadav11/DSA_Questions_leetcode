@@ -1,23 +1,32 @@
 /*********************************************** JAVA **************************************************/
 
-// Optimal Solution - Recursively removes target-valued leaf nodes bottom-up using post-order DFS, allowing newly exposed leaves to be evaluated after their children are pruned.
-/* "Post-order is essential here — processing children first means a node only checks itself as a leaf after its subtree is fully pruned. This handles cascading deletions automatically: 
-    if removing a leaf makes its parent a target leaf, the parent check happens naturally on the way back up the recursion." */
+// Optimal Solution - Implemented recursive postorder DFS to remove target-valued leaf nodes, including newly formed leaves, in O(n) time and O(h) auxiliary space.
+/* "I solve this problem using recursive postorder DFS. I first recursively process the left and right subtrees, updating the child references with their returned results. 
+    Then I check whether the current node has become a leaf and whether its value matches the target. If both conditions hold, I return null to delete it. 
+    Processing children first also handles cases where deleting a leaf creates a new target-valued leaf at its parent." */
 
 class Solution {
     public TreeNode removeLeafNodes(TreeNode root, int target) {
-        // base case: null node — nothing to remove
-        if (root == null) return null;
-        // post-order: process children before parent
-        root.left = removeLeafNodes(root.left, target);
-        root.right = removeLeafNodes(root.right, target);
-        // after children removed, check if current node became a target leaf
-        if (root.left == null && root.right == null && root.val == target)
+        // Base case: an empty node requires no processing.
+        if (root == null) {
             return null;
-        // keep node — not a target leaf
+        }
+        // First process the left subtree.
+        root.left = removeLeafNodes(root.left, target);
+        // Then process the right subtree.
+        root.right = removeLeafNodes(root.right, target);
+        // After processing children, check whether the current node
+        // has become a leaf with the target value.
+        if (root.left == null &&
+            root.right == null &&
+            root.val == target) {
+            // Delete the current node by returning null.
+            return null;
+        }
+        // Keep the current node.
         return root;
     }
 }
 
 // Time Complexity :- O(n).
-// Space Complexity :- O(n). n is the size of the recursion stack.
+// Space Complexity :- O(h).
