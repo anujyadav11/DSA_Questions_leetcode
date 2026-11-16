@@ -1,27 +1,32 @@
 /*********************************************** JAVA **************************************************/
 
-// Optimal Solution - Use recursion to generate all subsets and accumulate the XOR of each subset.
-/* "Each element can either be included or excluded, forming all possible subsets. I recursively compute the XOR for both choices and sum the results." */
+/*********************************************** JAVA **************************************************/
+
+// Optimal Solution - Used recursive pick/not-pick branching to explore all subsets and aggregate their XOR values in O(2ⁿ) time and O(n) auxiliary space.
+/* "I solve this problem using recursive pick-or-not-pick decisions. For every array element, I explore two possibilities: include it in the current subset and update the XOR, 
+    or exclude it and retain the existing XOR. Once all elements have been processed, I return the XOR total of that subset. I sum the results from both recursive branches. Since each element has two choices." */
 
 class Solution {
     public int subsetXORSum(int[] nums) {
-        // Start recursion from index 0 with XOR value 0
-        return solve(0, nums, 0);
+        // Start recursion with index 0 and XOR value 0.
+        return findXorTotal(nums, 0, 0);
     }
-    public int solve(int index, int[] nums, int currentXor) {
-        // Base case: if all elements are processed
-        if (index == nums.length)
-            return currentXor;  // Return XOR of this subset
-        // Case 1: include the current element in the subset
-        int include = solve(index + 1, nums, nums[index] ^ currentXor);
-        // Case 2: exclude the current element from the subset
-        int exclude = solve(index + 1, nums, currentXor);
-        // Total XOR sum of both choices
-        return include + exclude;
+    private int findXorTotal(int[] nums, int index, int xor) {
+        // Base case: all elements have been processed.
+        // Return the XOR total of the current subset.
+        if (index == nums.length) {
+            return xor;
+        }
+        // Choice 1: Include the current element in the subset.
+        int pick = findXorTotal(nums,index + 1,xor ^ nums[index]);
+        // Choice 2: Exclude the current element from the subset.
+        int notPick = findXorTotal(nums,index + 1,xor);
+        // Sum the XOR totals from both choices.
+        return pick + notPick;
     }
 }
 
-// Time Complexity :- O(2 ^ n).
+// Time Complexity :- O(2^n).
 // Space Complexity :- O(n).
 
 /******************************************************* JAVA *******************************************************/
