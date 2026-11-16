@@ -1,7 +1,5 @@
 /*********************************************** JAVA **************************************************/
 
-/*********************************************** JAVA **************************************************/
-
 // Optimal Solution - Used recursive pick/not-pick branching to explore all subsets and aggregate their XOR values in O(2ⁿ) time and O(n) auxiliary space.
 /* "I solve this problem using recursive pick-or-not-pick decisions. For every array element, I explore two possibilities: include it in the current subset and update the XOR, 
     or exclude it and retain the existing XOR. Once all elements have been processed, I return the XOR total of that subset. I sum the results from both recursive branches. Since each element has two choices." */
