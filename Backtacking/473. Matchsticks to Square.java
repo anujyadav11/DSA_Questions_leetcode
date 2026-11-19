@@ -71,4 +71,4 @@ class Solution {
 }
 
 // Time Complexity :- O(4^n).
-// Space Complexity :- O(n log n).
+// Space Complexity :- O(n).
